@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-app-bar dark app fixed clipped-left height="70px" color="grey darken-3">
+    <v-app-bar dense app fixed clipped-left height="70px" color="red darken-3">
       <v-toolbar-items v-for="item in items" :key="item.title" link @click="$router.push(item.to)">
-          <v-btn text>{{ item.title }}</v-btn text>
+          <v-btn text>{{ item.title }}</v-btn>
       </v-toolbar-items>
       <VSpacer />
       <v-toolbar-title style="font-size: 21px;" class="white--text ml-2">PAW-UAJY</v-toolbar-title>
@@ -19,19 +19,24 @@ export default {
     return {
       drawer: null,
       items: [{
-          title: "User Controller",
-          icon: "mdi-human-male",
-          to:"/"
+          title: "Home",
+          to:"/home"
         },
         {
-          title: "Branch Controller",
-          icon: "mdi-human-male",
-          to:"/branch"
+          title: "Service",
+          to:"/service"
         },
         {
-          title: "Towing Controller",
-          icon: "mdi-human-male",
+          title: "Sparepart",
+          to:"/sparepart"
+        },
+        {
+          title: "Towing",
           to:"/towing"
+        },
+        {
+          title: "Profile",
+          to:"/profile"
         },
       ]
     };

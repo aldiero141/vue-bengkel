@@ -2,7 +2,7 @@
   <v-container>
     <v-card>
       <v-container grid-list-md mb-0>
-        <h2 class="text-md-center">Cabang Bengkel</h2>
+        <h2 class="text-md-center">Services</h2>
         <v-layout row wrap style="margin:10px">
           <v-flex xs6>
             <v-btn
@@ -13,22 +13,22 @@
               color="green accent-3"
               @click="dialog = true"
             >
-              <v-icon size="18" class="mr-2">mdi-pencil-plus</v-icon>Tambah Cabang
+              <v-icon size="18" class="mr-2">mdi-pencil-plus</v-icon>Add New Service
             </v-btn>
           </v-flex>
           <v-flex xs6 class="text-right">
             <v-text-field v-model="keyword" append-icon="mdi-search" label="Search" hide-details></v-text-field>
           </v-flex>
         </v-layout>
-        <v-data-table :headers="headers" :items="branches" :search="keyword" :loading="load">
+        <v-data-table :headers="headers" :items="services" :search="keyword" :loading="load">
           <template v-slot:body="{ items }">
             <tbody>
               <tr v-for="(item,index) in items" :key="item.id">
                 <td>{{ index + 1 }}</td>
-                <td>{{ item.name }}</td>
-                <td>{{ item.address}}</td>
-                <td>{{ item.phoneNumber }}</td>
-                <td>{{ item.created_at }}</td>
+                <td>{{ item.date }}</td>
+                <td>{{ item.serviceType}}</td>
+                <td>{{ item.licenseNumber }}</td>
+                <td>{{ item.message }}</td>
                 <td class="text-center">
                   <v-btn icon color="indigo" light @click="editHandler(item)">
                     <v-icon>mdi-pencil</v-icon>
@@ -46,19 +46,22 @@
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
-          <span class="headline">Cabang Bengkel</span>
+          <span class="headline">Service</span>
         </v-card-title>
         <v-card-text>
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field label="Name*" v-model="form.name" required></v-text-field>
+                <v-text-field label="Name*" v-model="form.date" required></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Address*" v-model="form.address" required></v-text-field>
+                <v-text-field label="Address*" v-model="form.serviceType" required></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Phone Number*" v-model="form.phoneNumber" required></v-text-field>
+                <v-text-field label="Phone Number*" v-model="form.licenseNumber" required></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field label="Phone Number*" v-model="form.message" required></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -89,27 +92,27 @@ export default {
           value: "no"
         },
         {
-          text: "Name",
-          value: "name"
+          text: "Date ",
+          value: "date"
         },
         {
-          text: "Address",
-          value: "address"
+          text: "Service Type",
+          value: "serviceType"
         },
         {
-          text: "Phone Number",
-          value: "phoneNumber"
+          text: "License Number",
+          value: "licenseNumber"
         },
         {
-          text: "Created at",
-          value: "created_at"
+          text: "Message",
+          value: "message"
         }, 
         {
-          text: "Aksi",
+          text: "Action",
           value: null
         }
       ],
-      branches: [],
+      services: [],
       snackbar: false,
       color: null,
       text: "",
@@ -119,7 +122,7 @@ export default {
         address: "",
         phoneNumber: ""
       },
-      branch: new FormData(),
+      service: new FormData(),
       typeInput: "new",
       errors: "",
       updatedId: ""
@@ -127,33 +130,28 @@ export default {
   },
   methods: {
     getData() {
-      var uri = this.$apiUrl + "/branch";
+      var uri = this.$apiUrl + "/service";
       this.$http.get(uri).then(response => {
-        this.branches = response.data.message;
+        this.services = response.data.message;
       });
     },
     sendData() {
-      var created_at = new Date();
-      var dd = String(created_at.getDate()).padStart(2, '0');
-      var mm = String(created_at.getMonth() + 1).padStart(2, '0'); //January is 0!
-      var yyyy = created_at.getFullYear();
-      created_at = yyyy + '/' + mm + '/' + dd;
 
-      this.branch.append("name", this.form.name);
-      this.branch.append("address", this.form.address);
-      this.branch.append("phoneNumber", this.form.phoneNumber);
-      this.branch.append("created_at",created_at);
-      var uri = this.$apiUrl + "/branch";
+      this.service.append("date", this.form.date);
+      this.service.append("serviceType", this.form.serviceType);
+      this.service.append("licenseNumber", this.form.licenseNumber);
+      this.service.append("message",message);
+      var uri = this.$apiUrl + "/service";
       this.load = true;
       this.$http
-        .post(uri, this.branch)
+        .post(uri, this.service)
         .then(response => {
           this.snackbar = true; //mengaktifkan snackbar
           this.color = "green"; //memberi warna snackbar
           this.text = response.data.message; //memasukkan pesan ke snackba
           this.load = false;
           this.dialog = false;
-          this.getData(); //mengambil data branch
+          this.getData(); //mengambil data service
           this.resetForm();
         })
         .catch(error => {
@@ -165,14 +163,14 @@ export default {
         });
     },
     updateData() {
-      this.branch.append("name", this.form.name);
-      this.branch.append("address", this.form.address);
-      this.branch.append("phoneNumber", this.form.phoneNumber);
-      this.branch.append("created_at", this.form.created_at);
-      var uri = this.$apiUrl + "/branch/" + this.updatedId;
+      this.service.append("date", this.form.date);
+      this.service.append("serviceType", this.form.serviceType);
+      this.service.append("licenseNumber", this.form.licenseNumber);
+      this.service.append("message", this.form.message);
+      var uri = this.$apiUrl + "/service/" + this.updatedId;
       this.load = true;
       this.$http
-        .post(uri, this.branch)
+        .post(uri, this.service)
         .then(response => {
           this.snackbar = true; //mengaktifkan snackbar
           this.color = "green"; //memberi warna snackbar
@@ -180,7 +178,7 @@ export default {
 
           this.load = false;
           this.dialog = false;
-          this.getData(); //mengambil data branch
+          this.getData(); //mengambil data service
           this.resetForm();
           this.typeInput = "new";
         })
@@ -196,14 +194,14 @@ export default {
     editHandler(item) {
       this.typeInput = "edit";
       this.dialog = true;
-      this.form.name = item.name;
-      this.form.address = item.address;
-      this.form.phoneNumber = item.phoneNumber;
-      this.form.created_at = item.created_at;
+      this.form.date = item.date;
+      this.form.serviceType = item.serviceType;
+      this.form.licenseNumber = item.licenseNumber;
+      this.form.message = item.message;
       (this.updatedId = item.id);
     },
     deleteData(deleteId) {
-      var uri = this.$apiUrl + "/branch/" + deleteId;
+      var uri = this.$apiUrl + "/service/" + deleteId;
       this.$http
         .delete(uri)
         .then(response => {
@@ -230,9 +228,10 @@ export default {
     },
     resetForm() {
       this.form = {
-        name: "",
-        address: "",
-        phoneNumber: ""
+        date: "",
+        serviceType: "",
+        licenseNumber: "",
+        message: "",
       };
     }
   },

@@ -19,14 +19,24 @@ const routes = [
         component: loadView('userController')
       },
       {
-        name: 'BranchController',
-        path: '/branch',
-        component: loadView('branchController')
+        name: 'ServiceController',
+        path: '/service',
+        component: loadView('serviceController')
+      },
+      {
+        name: 'SparepartController',
+        path: '/sparepart',
+        component: loadView('SparepartController')
       },
       {
         name: 'TowingController',
         path: '/towing',
         component: loadView('towingController')
+      },
+      {
+        name: 'ProfileController',
+        path: '/profile',
+        component: loadView('ProfileController')
       },
     ]
   }
