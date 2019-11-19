@@ -5,7 +5,24 @@
           <v-btn text color="white">{{ item.title }}</v-btn>
       </v-toolbar-items>
       <VSpacer />
-      <v-toolbar-title style="font-size: 21px;" class="white--text ml-2">PAW-UAJY</v-toolbar-title>
+      <v-menu
+      transition="slide-y-transition"
+      bottom
+    >
+      <template v-slot:activator="{ on }">
+        <v-btn text dark v-on="on">
+          <v-avatar>
+            <img src="https://i.imgur.com/NLDugGD.jpg" alt="John">
+          </v-avatar>
+          Username
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-item v-for="menu in menus" :key="menu.title" link @click="$router.push(menu.to)">
+          <v-list-item-title>{{ menu.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
     </v-app-bar>
     <VContent>
       <router-view />
@@ -38,6 +55,15 @@ export default {
           title: "Profile",
           to:"/profile"
         },
+      ],
+      menus: [{
+          title: "Edit Profile",
+          to:"/editProfile"
+        },
+        {
+          title: "Sign Out",
+          to:"/signOut"
+        }
       ]
     };
   }
