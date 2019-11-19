@@ -10,10 +10,10 @@
               dark
               rounded
               style="text-transform: none !important;"
-              color="green accent-3"
+              color="blue accent-5"
               @click="dialog = true"
             >
-              <v-icon size="18" class="mr-2">mdi-pencil-plus</v-icon>Add New Service
+              Add New Service
             </v-btn>
           </v-flex>
           <v-flex xs6 class="text-right">
