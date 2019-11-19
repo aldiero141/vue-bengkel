@@ -23,6 +23,11 @@ const routes = [
         path: '/branch',
         component: loadView('branchController')
       },
+      {
+        name: 'TowingController',
+        path: '/towing',
+        component: loadView('towingController')
+      },
     ]
   }
 ];

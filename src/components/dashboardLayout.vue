@@ -53,6 +53,11 @@ export default {
           icon: "mdi-human-male",
           to:"/branch"
         },
+        {
+          title: "Towing Controller",
+          icon: "mdi-human-male",
+          to:"/towing"
+        },
       ]
     };
   }
