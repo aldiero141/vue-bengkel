@@ -112,7 +112,7 @@ export default {
           value: "pickup_location"
         }, 
         {
-          text: "Aksi",
+          text: "Action",
           value: null
         }
       ],
