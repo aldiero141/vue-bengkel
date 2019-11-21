@@ -11,7 +11,7 @@
             Username
           </v-btn>
           <v-avatar>
-            <img src="https://i.imgur.com/NLDugGD.jpg" alt="John">
+            <img src="https://i.imgur.com/VD09afj.jpg" alt="John">
           </v-avatar>
         </template>
         <v-list>
@@ -24,6 +24,12 @@
     <VContent>
       <router-view />
     </VContent>
+    <v-footer
+      :inset="footer.inset"
+      app
+    >
+      <span class="px-4">&copy; {{ new Date().getFullYear() }}</span>
+    </v-footer>
   </div>
 </template>
 
@@ -32,6 +38,9 @@ export default {
   data() {
     return {
       drawer: null,
+      footer: {
+        inset: false,
+      },
       items: [{
           title: "Home",
           to:"/home"
