@@ -26,7 +26,7 @@ const routes = [
       {
         name: 'SparepartController',
         path: '/sparepart',
-        component: loadView('SparepartController')
+        component: loadView('sparepartController')
       },
       {
         name: 'TowingController',
