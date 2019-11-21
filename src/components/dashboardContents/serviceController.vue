@@ -3,6 +3,7 @@
     <v-card>
       <v-container grid-list-md mb-0>
         <h2 class="text-md-center">Services</h2>
+        <h3 class="text-md-center">Services History</h3>
         <v-layout row wrap style="margin:10px">
           <v-flex xs6>
             <v-btn
@@ -10,10 +11,10 @@
               dark
               rounded
               style="text-transform: none !important;"
-              color="blue accent-5"
+              color="blue accent-3"
               @click="dialog = true"
             >
-              Add New Service
+             <v-icon size="18" class="mr-2">mdi-motorbike</v-icon>Get New Service
             </v-btn>
           </v-flex>
           <v-flex xs6 class="text-right">

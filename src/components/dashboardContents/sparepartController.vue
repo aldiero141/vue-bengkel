@@ -86,7 +86,7 @@
                 dialog: false,
                 keyword: '',
                 headers: [{
-                    text: 'No.',
+                    text: 'No',
                     value: 'no',
                 }, {
                     text: 'Sparepart',

@@ -3,6 +3,7 @@
     <v-card>
       <v-container grid-list-md mb-0>
         <h2 class="text-md-center">Towing</h2>
+        <h3 class="text-md-center">Towing Service History</h3>
         <v-layout row wrap style="margin:10px">
           <v-flex xs6>
             <v-btn
@@ -10,10 +11,10 @@
               dark
               rounded
               style="text-transform: none !important;"
-              color="green accent-3"
+              color="blue accent-3"
               @click="dialog = true"
             >
-              <v-icon size="18" class="mr-2">mdi-pencil-plus</v-icon>Tow Other Vehicle
+              <v-icon size="18" class="mr-2">mdi-towing</v-icon>Tow Other Vehicle
             </v-btn>
           </v-flex>
           <v-flex xs6 class="text-right">
@@ -56,7 +57,7 @@
                 <v-text-field label="Date*" v-model="form.date" required></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Merk*" v-model="form.merk" required></v-text-field>
+                <v-text-field label="Brand*" v-model="form.merk" required></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field label="Color*" v-model="form.color" required></v-text-field>
@@ -92,11 +93,15 @@ export default {
       keyword: "",
       headers: [
         {
+          text: "No",
+          value: "no"
+        },
+        {
           text: "Date",
           value: "date"
         },
         {
-          text: "Merk",
+          text: "Brand",
           value: "merk"
         },
         {
