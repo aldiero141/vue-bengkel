@@ -1,49 +1,63 @@
 <template>
   <v-container>
-    <v-card>
-      <v-container grid-list-md mb-0>
-        <h2 class="text-md-center">Services</h2>
-        <h3 class="text-md-center">Services History</h3>
-        <v-layout row wrap style="margin:10px">
-          <v-flex xs6>
-            <v-btn
-              depressed
-              dark
-              rounded
-              style="text-transform: none !important;"
-              color="blue accent-3"
-              @click="dialog = true"
-            >
-             <v-icon size="18" class="mr-2">mdi-motorbike</v-icon>Get New Service
-            </v-btn>
-          </v-flex>
-          <v-flex xs6 class="text-right">
-            <v-text-field v-model="keyword" append-icon="mdi-search" label="Search" hide-details></v-text-field>
-          </v-flex>
-        </v-layout>
-        <v-data-table :headers="headers" :items="services" :search="keyword" :loading="load">
-          <template v-slot:body="{ items }">
-            <tbody>
-              <tr v-for="(item,index) in items" :key="item.id">
-                <td>{{ index + 1 }}</td>
-                <td>{{ item.date }}</td>
-                <td>{{ item.serviceType}}</td>
-                <td>{{ item.licenseNumber }}</td>
-                <td>{{ item.message }}</td>
-                <td class="text-center">
-                  <v-btn icon color="indigo" light @click="editHandler(item)">
-                    <v-icon>mdi-pencil</v-icon>
-                  </v-btn>
-                  <v-btn icon color="error" light @click="deleteData(item.id)">
-                    <v-icon>mdi-delete</v-icon>
-                  </v-btn>
-                </td>
-              </tr>
-            </tbody>
-          </template>
-        </v-data-table>
-      </v-container>
-    </v-card>
+    <v-row>
+      <v-col>
+        <v-card class="mx-auto justify-center" color="blue accent-3" dark raised="4dp">
+          <v-row>
+            <v-col>
+              <v-card-title class="justify-center">
+                <h2 class="text-md-center">Service</h2>
+              </v-card-title>
+              <v-card-subtitle class="justify-center">
+                <h3 class="text-md-center ">Repair Services History</h3>
+              </v-card-subtitle>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col>
+        <v-card>
+          <v-container grid-list-md mb-0>
+            <v-layout row wrap style="margin:10px">
+              <v-flex xs6>
+                <v-btn depressed dark rounded style="text-transform: none !important;" color="blue accent-3"
+                  @click="dialog = true">
+                  <v-icon size="18" class="mr-2">mdi-motorbike</v-icon>Get New Service
+                </v-btn>
+              </v-flex>
+              <v-flex xs6 class="text-right">
+                <v-text-field v-model="keyword" append-icon="mdi-search" label="Search" hide-details></v-text-field>
+              </v-flex>
+            </v-layout>
+            <v-data-table :headers="headers" :items="services" :search="keyword" :loading="load">
+              <template v-slot:body="{ items }">
+                <tbody>
+                  <tr v-for="(item,index) in items" :key="item.id">
+                    <td>{{ index + 1 }}</td>
+                    <td>{{ item.date }}</td>
+                    <td>{{ item.serviceType}}</td>
+                    <td>{{ item.licenseNumber }}</td>
+                    <td>{{ item.message }}</td>
+                    <td class="text-center">
+                      <v-btn icon color="indigo" light @click="editHandler(item)">
+                        <v-icon>mdi-pencil</v-icon>
+                      </v-btn>
+                      <v-btn icon color="error" light @click="deleteData(item.id)">
+                        <v-icon>mdi-delete</v-icon>
+                      </v-btn>
+                    </td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-data-table>
+          </v-container>
+        </v-card>
+      </v-col>
+    </v-row>
+
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
@@ -82,162 +96,161 @@
   </v-container>
 </template>
 <script>
-export default {
-  data() {
-    return {
-      dialog: false,
-      keyword: "",
-      headers: [
-        {
-          text: "No",
-          value: "no"
+  export default {
+    data() {
+      return {
+        dialog: false,
+        keyword: "",
+        headers: [{
+            text: "No",
+            value: "no"
+          },
+          {
+            text: "Date ",
+            value: "date"
+          },
+          {
+            text: "Service Type",
+            value: "serviceType"
+          },
+          {
+            text: "License Number",
+            value: "licenseNumber"
+          },
+          {
+            text: "Message",
+            value: "message"
+          },
+          {
+            text: "Action",
+            value: null
+          }
+        ],
+        services: [],
+        snackbar: false,
+        color: null,
+        text: "",
+        load: false,
+        form: {
+          date: "",
+          serviceType: "",
+          licenseNumber: ""
         },
-        {
-          text: "Date ",
-          value: "date"
-        },
-        {
-          text: "Service Type",
-          value: "serviceType"
-        },
-        {
-          text: "License Number",
-          value: "licenseNumber"
-        },
-        {
-          text: "Message",
-          value: "message"
-        }, 
-        {
-          text: "Action",
-          value: null
-        }
-      ],
-      services: [],
-      snackbar: false,
-      color: null,
-      text: "",
-      load: false,
-      form: {
-        name: "",
-        address: "",
-        phoneNumber: ""
+        service: new FormData(),
+        typeInput: "new",
+        errors: "",
+        updatedId: ""
+      };
+    },
+    methods: {
+      getData() {
+        var uri = this.$apiUrl + "/service";
+        this.$http.get(uri).then(response => {
+          this.services = response.data.message;
+        });
       },
-      service: new FormData(),
-      typeInput: "new",
-      errors: "",
-      updatedId: ""
-    };
-  },
-  methods: {
-    getData() {
-      var uri = this.$apiUrl + "/service";
-      this.$http.get(uri).then(response => {
-        this.services = response.data.message;
-      });
-    },
-    sendData() {
+      sendData() {
 
-      this.service.append("date", this.form.date);
-      this.service.append("serviceType", this.form.serviceType);
-      this.service.append("licenseNumber", this.form.licenseNumber);
-      this.service.append("message",this.form.message);
-      var uri = this.$apiUrl + "/service";
-      this.load = true;
-      this.$http
-        .post(uri, this.service)
-        .then(response => {
-          this.snackbar = true; //mengaktifkan snackbar
-          this.color = "green"; //memberi warna snackbar
-          this.text = response.data.message; //memasukkan pesan ke snackba
-          this.load = false;
-          this.dialog = false;
-          this.getData(); //mengambil data service
-          this.resetForm();
-        })
-        .catch(error => {
-          this.errors = error;
-          this.snackbar = true;
-          this.text = "Try Again";
-          this.color = "red";
-          this.load = false;
-        });
-    },
-    updateData() {
-      this.service.append("date", this.form.date);
-      this.service.append("serviceType", this.form.serviceType);
-      this.service.append("licenseNumber", this.form.licenseNumber);
-      this.service.append("message", this.form.message);
-      var uri = this.$apiUrl + "/service/" + this.updatedId;
-      this.load = true;
-      this.$http
-        .post(uri, this.service)
-        .then(response => {
-          this.snackbar = true; //mengaktifkan snackbar
-          this.color = "green"; //memberi warna snackbar
-          this.text = response.data.message; //memasukkan pesan ke snackba
+        this.service.append("date", this.form.date);
+        this.service.append("serviceType", this.form.serviceType);
+        this.service.append("licenseNumber", this.form.licenseNumber);
+        this.service.append("message", this.form.message);
+        var uri = this.$apiUrl + "/service";
+        this.load = true;
+        this.$http
+          .post(uri, this.service)
+          .then(response => {
+            this.snackbar = true; //mengaktifkan snackbar
+            this.color = "green"; //memberi warna snackbar
+            this.text = response.data.message; //memasukkan pesan ke snackba
+            this.load = false;
+            this.dialog = false;
+            this.getData(); //mengambil data service
+            this.resetForm();
+          })
+          .catch(error => {
+            this.errors = error;
+            this.snackbar = true;
+            this.text = "Try Again";
+            this.color = "red";
+            this.load = false;
+          });
+      },
+      updateData() {
+        this.service.append("date", this.form.date);
+        this.service.append("serviceType", this.form.serviceType);
+        this.service.append("licenseNumber", this.form.licenseNumber);
+        this.service.append("message", this.form.message);
+        var uri = this.$apiUrl + "/service/" + this.updatedId;
+        this.load = true;
+        this.$http
+          .post(uri, this.service)
+          .then(response => {
+            this.snackbar = true; //mengaktifkan snackbar
+            this.color = "green"; //memberi warna snackbar
+            this.text = response.data.message; //memasukkan pesan ke snackba
 
-          this.load = false;
-          this.dialog = false;
-          this.getData(); //mengambil data service
-          this.resetForm();
-          this.typeInput = "new";
-        })
-        .catch(error => {
-          this.errors = error;
-          this.snackbar = true;
-          this.text = "Try Again";
-          this.color = "red";
-          this.load = false;
-          this.typeInput = "new";
-        });
-    },
-    editHandler(item) {
-      this.typeInput = "edit";
-      this.dialog = true;
-      this.form.date = item.date;
-      this.form.serviceType = item.serviceType;
-      this.form.licenseNumber = item.licenseNumber;
-      this.form.message = item.message;
-      (this.updatedId = item.id);
-    },
-    deleteData(deleteId) {
-      var uri = this.$apiUrl + "/service/" + deleteId;
-      this.$http
-        .delete(uri)
-        .then(response => {
-          this.snackbar = true;
-          this.text = response.data.message;
-          this.color = "green";
-          this.deleteDialog = false;
-          this.getData();
-        })
-        .catch(error => {
-          this.errors = error;
-          this.snackbar = true;
-          this.text = "Try Again";
-          this.color = "red";
-        });
-    },
-    setForm() {
-      if (this.typeInput === "new") {
-        this.sendData();
-      } else {
-        console.log("dddd");
-        this.updateData();
+            this.load = false;
+            this.dialog = false;
+            this.getData(); //mengambil data service
+            this.resetForm();
+            this.typeInput = "new";
+          })
+          .catch(error => {
+            this.errors = error;
+            this.snackbar = true;
+            this.text = "Try Again";
+            this.color = "red";
+            this.load = false;
+            this.typeInput = "new";
+          });
+      },
+      editHandler(item) {
+        this.typeInput = "edit";
+        this.dialog = true;
+        this.form.date = item.date;
+        this.form.serviceType = item.serviceType;
+        this.form.licenseNumber = item.licenseNumber;
+        this.form.message = item.message;
+        (this.updatedId = item.id);
+      },
+      deleteData(deleteId) {
+        var uri = this.$apiUrl + "/service/" + deleteId;
+        this.$http
+          .delete(uri)
+          .then(response => {
+            this.snackbar = true;
+            this.text = response.data.message;
+            this.color = "green";
+            this.deleteDialog = false;
+            this.getData();
+          })
+          .catch(error => {
+            this.errors = error;
+            this.snackbar = true;
+            this.text = "Try Again";
+            this.color = "red";
+          });
+      },
+      setForm() {
+        if (this.typeInput === "new") {
+          this.sendData();
+        } else {
+          console.log("dddd");
+          this.updateData();
+        }
+      },
+      resetForm() {
+        this.form = {
+          date: "",
+          serviceType: "",
+          licenseNumber: "",
+          message: "",
+        };
       }
     },
-    resetForm() {
-      this.form = {
-        date: "",
-        serviceType: "",
-        licenseNumber: "",
-        message: "",
-      };
+    mounted() {
+      this.getData();
     }
-  },
-  mounted() {
-    this.getData();
-  }
-};
+  };
 </script>

@@ -5,69 +5,93 @@
         <v-btn text color="white">{{ item.title }}</v-btn>
       </v-toolbar-items>
       <v-spacer />
-      <v-menu transition="slide-y-transition" bottom>
+
+      <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="100" offset-x
+        transition="slide-x-reverse-transition" bottom>
         <template v-slot:activator="{ on }">
           <v-btn text dark v-on="on">
-            Username<v-icon>mdi-menu-down</v-icon>
+            JohnDoe2020<v-icon>mdi-menu-down</v-icon>
           </v-btn>
           <v-avatar>
-            <img src="https://i.imgur.com/VD09afj.jpg" alt="John">
+            <img src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png" alt="John">
           </v-avatar>
         </template>
-        <v-list>
-          <v-list-item v-for="menu in menus" :key="menu.title" link @click="$router.push(menu.to)">
-            <v-list-item-title>{{ menu.title }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
+        <v-card>
+          <v-list>
+            <v-list-item>
+              <v-list-item-avatar>
+                <img src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png" alt="John">
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title>JohnDoe2020</v-list-item-title>
+                <v-list-item-subtitle>John@mail.com</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+          <v-divider></v-divider>
+          <v-list>
+            <v-list-item v-for="menu in menus" :key="menu.title" link @click="$router.push(menu.to)">
+              <v-list-item-title>{{ menu.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-card>
       </v-menu>
     </v-app-bar>
+
     <VContent>
-      <router-view />
+      <template>
+        <v-img src="https://cdn.vuetifyjs.com/images/parallax/material.jpg" aspect-ratio="2">
+          <router-view />
+        </v-img>
+      </template>
     </VContent>
-    <v-footer
-      :inset="footer.inset"
-      app
-    >
-      <span class="px-4">&copy; {{ new Date().getFullYear() }}</span>
+
+    <v-footer padless :inset="footer.inset" app absolute>
+      <v-card class="flex" flat tile>
+        <v-card-text class="py-2 text-left">
+          ©{{ new Date().getFullYear() }} — Created with <v-icon>mdi-heart</v-icon> by Kelompok 6 PAW™ — Raditya Dimas
+          Bagus Santoso — Alexander Rivelino Aldo Aldiero — Yanuarius Hermawan — Alisha Aileen
+        </v-card-text>
+      </v-card>
     </v-footer>
   </div>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      drawer: null,
-      footer: {
-        inset: false,
-      },
-      items: [{
-          title: "Home",
-          to:"/home"
+  export default {
+    data() {
+      return {
+        drawer: null,
+        footer: {
+          inset: false,
         },
-        {
-          title: "Service",
-          to:"/service"
-        },
-        {
-          title: "Sparepart",
-          to:"/sparepart"
-        },
-        {
-          title: "Towing",
-          to:"/towing"
-        }
-      ],
-      menus: [{
-          title: "Profile",
-          to:"/profile"
-        },
-        {
-          title: "Sign Out",
-          to:"/signOut"
-        }
-      ]
-    };
-  }
-};
+        items: [{
+            title: "Home",
+            to: "/home"
+          },
+          {
+            title: "Service",
+            to: "/service"
+          },
+          {
+            title: "Sparepart",
+            to: "/sparepart"
+          },
+          {
+            title: "Towing",
+            to: "/towing"
+          }
+        ],
+        menus: [{
+            title: "Profile",
+            to: "/profile"
+          },
+          {
+            title: "Sign Out",
+            to: "/signOut"
+          }
+        ]
+      };
+    }
+  };
 </script>
