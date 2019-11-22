@@ -62,7 +62,7 @@
                 <v-text-field label="Phone Number*" v-model="form.licenseNumber" required></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Phone Number*" v-model="form.message" required></v-text-field>
+                <v-text-field label="Message*" v-model="form.message" required></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -141,7 +141,7 @@ export default {
       this.service.append("date", this.form.date);
       this.service.append("serviceType", this.form.serviceType);
       this.service.append("licenseNumber", this.form.licenseNumber);
-      this.service.append("message",message);
+      this.service.append("message",this.form.message);
       var uri = this.$apiUrl + "/service";
       this.load = true;
       this.$http

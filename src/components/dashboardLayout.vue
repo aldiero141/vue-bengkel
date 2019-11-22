@@ -4,11 +4,11 @@
       <v-toolbar-items v-for="item in items" :key="item.title" link @click="$router.push(item.to)">
         <v-btn text color="white">{{ item.title }}</v-btn>
       </v-toolbar-items>
-      <VSpacer />
+      <v-spacer />
       <v-menu transition="slide-y-transition" bottom>
         <template v-slot:activator="{ on }">
           <v-btn text dark v-on="on">
-            Username
+            Username<v-icon>mdi-menu-down</v-icon>
           </v-btn>
           <v-avatar>
             <img src="https://i.imgur.com/VD09afj.jpg" alt="John">
