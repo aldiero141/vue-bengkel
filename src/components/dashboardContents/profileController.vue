@@ -121,7 +121,7 @@
     },
     methods: {
       getData() {
-        var uri = this.$apiUrl + "/user/";
+        var uri = this.$apiUrl + "/user/" + this.id;
         this.$http.get(uri).then(response => {
           this.profiles = response.data.message;
         });
@@ -163,7 +163,7 @@
         this.profile.append("merk", this.form.username);
         this.profile.append("color", this.form.email);
         this.profile.append("license_number", this.dateofbirth);
-        var uri = this.$apiUrl + "/profile/" + this.updatedId;
+        var uri = this.$apiUrl + "/user/" + this.updatedId;
         this.load = true;
         this.$http
           .post(uri, this.profile)
@@ -197,7 +197,7 @@
         (this.updatedId = item.id);
       },
       deleteData(deleteId) {
-        var uri = this.$apiUrl + "/profile/" + deleteId;
+        var uri = this.$apiUrl + "/user/" + deleteId;
         this.$http
           .delete(uri)
           .then(response => {
