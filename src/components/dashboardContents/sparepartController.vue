@@ -1,29 +1,5 @@
 <template>
     <v-container>
-<<<<<<< HEAD
-        <v-card>
-            <v-container grid-list-md mb-0>
-                <h2 class="text-md-center">Sparepart</h2>
-                <h3 class="text-md-center">Sparepart Purchase History</h3>
-                <v-layout row wrap style="margin:10px">
-                    <v-flex xs6>
-                        <v-btn 
-                            depressed 
-                            dark
-                            rounded 
-                            style="text-transform: none !important;" 
-                            color="red accent-3"
-                            @click="dialog = true"
-                        >
-                        <v-icon size="18" class="mr-2">mdi-wrench</v-icon>Buy New Sparepart
-                        </v-btn>
-                    </v-flex>
-                    <v-flex xs6 class="text-right">
-						<v-text-field v-model="keyword" append-icon="mdi-search" label="Search" hide-details>
-						</v-text-field>
-					</v-flex>
-                </v-layout>
-=======
         <v-row>
             <v-col>
                 <v-card class="mx-auto justify-center" color="green darken-1" dark raised="4dp">
@@ -47,7 +23,7 @@
                         <v-layout row wrap style="margin:10px">
                             <v-flex xs6>
                                 <v-btn depressed dark rounded style="text-transform: none !important;"
-                                    color="blue accent-3" @click="dialog = true">
+                                    color="error accent-3" @click="dialog = true">
                                     <v-icon size="18" class="mr-2">mdi-wrench</v-icon>Buy New Sparepart
                                 </v-btn>
                             </v-flex>
@@ -56,7 +32,6 @@
                                 </v-text-field>
                             </v-flex>
                         </v-layout>
->>>>>>> 4e875fef27254eaa63e18a33133144e6c5f98432
 
                         <v-data-table :headers="headers" :items="spareparts" :search="keyword" :loading="load">
                             <template v-slot:body="{ items }">
