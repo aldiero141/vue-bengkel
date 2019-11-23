@@ -2,70 +2,96 @@
   <div>
     <v-app-bar dense app fixed clipped-left height="70px" color="red darken-3">
       <v-toolbar-items v-for="item in items" :key="item.title" link @click="$router.push(item.to)">
-          <v-btn text color="white">{{ item.title }}</v-btn>
+        <v-btn text color="white">{{ item.title }}</v-btn>
       </v-toolbar-items>
-      <VSpacer />
-      <v-menu
-      transition="slide-y-transition"
-      bottom
-    >
-      <template v-slot:activator="{ on }">
-        <v-btn text dark v-on="on">
+      <v-spacer />
+
+      <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="100" offset-x
+        transition="slide-x-reverse-transition" bottom>
+        <template v-slot:activator="{ on }">
+          <v-btn text dark v-on="on">
+            JohnDoe2020<v-icon>mdi-menu-down</v-icon>
+          </v-btn>
           <v-avatar>
-            <img src="https://i.imgur.com/NLDugGD.jpg" alt="John">
+            <img src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png" alt="John">
           </v-avatar>
-          Username
-        </v-btn>
-      </template>
-      <v-list>
-        <v-list-item v-for="menu in menus" :key="menu.title" link @click="$router.push(menu.to)">
-          <v-list-item-title>{{ menu.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
+        </template>
+        <v-card>
+          <v-list>
+            <v-list-item>
+              <v-list-item-avatar>
+                <img src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png" alt="John">
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title>JohnDoe2020</v-list-item-title>
+                <v-list-item-subtitle>John@mail.com</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+          <v-divider></v-divider>
+          <v-list>
+            <v-list-item v-for="menu in menus" :key="menu.title" link @click="$router.push(menu.to)">
+              <v-list-item-title>{{ menu.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-card>
+      </v-menu>
     </v-app-bar>
+
     <VContent>
-      <router-view />
+      <template>
+        <v-img src="https://cdn.vuetifyjs.com/images/parallax/material.jpg" aspect-ratio="2">
+          <router-view />
+        </v-img>
+      </template>
     </VContent>
+
+    <v-footer padless :inset="footer.inset" app absolute>
+      <v-card class="flex" flat tile>
+        <v-card-text class="py-2 text-left">
+          ©{{ new Date().getFullYear() }} — Created with <v-icon>mdi-heart</v-icon> by Kelompok 6 PAW™ — Raditya Dimas
+          Bagus Santoso — Alexander Rivelino Aldo Aldiero — Yanuarius Hermawan — Alisha Aileen
+        </v-card-text>
+      </v-card>
+    </v-footer>
   </div>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      drawer: null,
-      items: [{
-          title: "Home",
-          to:"/home"
+  export default {
+    data() {
+      return {
+        drawer: null,
+        footer: {
+          inset: false,
         },
-        {
-          title: "Service",
-          to:"/service"
-        },
-        {
-          title: "Sparepart",
-          to:"/sparepart"
-        },
-        {
-          title: "Towing",
-          to:"/towing"
-        },
-        {
-          title: "Profile",
-          to:"/profile"
-        },
-      ],
-      menus: [{
-          title: "Edit Profile",
-          to:"/editProfile"
-        },
-        {
-          title: "Sign Out",
-          to:"/signOut"
-        }
-      ]
-    };
-  }
-};
+        items: [{
+            title: "Home",
+            to: "/home"
+          },
+          {
+            title: "Service",
+            to: "/service"
+          },
+          {
+            title: "Sparepart",
+            to: "/sparepart"
+          },
+          {
+            title: "Towing",
+            to: "/towing"
+          }
+        ],
+        menus: [{
+            title: "Profile",
+            to: "/profile"
+          },
+          {
+            title: "Sign Out",
+            to: "/signOut"
+          }
+        ]
+      };
+    }
+  };
 </script>
