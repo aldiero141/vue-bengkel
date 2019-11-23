@@ -121,7 +121,7 @@
     },
     methods: {
       getData() {
-        var uri = this.$apiUrl + "/profile";
+        var uri = this.$apiUrl + "/user/";
         this.$http.get(uri).then(response => {
           this.profiles = response.data.message;
         });
