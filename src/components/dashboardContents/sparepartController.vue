@@ -11,7 +11,7 @@
                             dark
                             rounded 
                             style="text-transform: none !important;" 
-                            color="blue accent-3"
+                            color="red accent-3"
                             @click="dialog = true"
                         >
                         <v-icon size="18" class="mr-2">mdi-wrench</v-icon>Buy New Sparepart
