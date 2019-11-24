@@ -19,6 +19,9 @@
               type="password" :rules="[comparePasswords]"></v-text-field>
           </v-form>
         </v-card-text>
+        <v-card-text>
+          Have an account? <a href="/">Login here</a>
+        </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="error" type='submit' @click="registerUser()">REGISTER</v-btn>

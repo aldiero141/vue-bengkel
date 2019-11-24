@@ -13,6 +13,12 @@
             </v-text-field>
           </v-form>
         </v-card-text>
+        <v-card-text>
+          Dont have an account yet? <a href="/register">Register here</a>
+        </v-card-text>
+        <!-- <v-form>
+          <a>Dont have an account yet? Register here</a>
+        </v-form> -->
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="error" type='submit' @click='login()'>LOGIN</v-btn>
