@@ -9,8 +9,8 @@
       <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="100" offset-x
         transition="slide-x-reverse-transition" bottom>
         <template v-slot:activator="{ on }">
-          <v-btn text dark v-on="on">
-            JohnDoe2020<v-icon>mdi-menu-down</v-icon>
+          <v-btn text dark v-on="on" v-for="profile in profiles" :key="profile.id_user">
+            {{profile.username}}<v-icon>mdi-menu-down</v-icon>
           </v-btn>
           <v-avatar>
             <img src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png" alt="John">
@@ -22,9 +22,9 @@
               <v-list-item-avatar>
                 <img src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png" alt="John">
               </v-list-item-avatar>
-              <v-list-item-content>
-                <v-list-item-title>JohnDoe2020</v-list-item-title>
-                <v-list-item-subtitle>John@mail.com</v-list-item-subtitle>
+              <v-list-item-content v-for="profile in profiles" :key="profile.id_user">
+                <v-list-item-title>{{profile.username}}</v-list-item-title>
+                <v-list-item-subtitle>{{profile.email}}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -62,6 +62,8 @@
     data() {
       return {
         drawer: null,
+        profiles: [],
+        profile: new FormData(),
         footer: {
           inset: false,
         },
@@ -93,12 +95,29 @@
         ]
       };
     },
-  methods:{
-    logout() {
-      localStorage.removeItem("token");
-      this.$router.push({ name: "loginLayout" });
-      alert("Success Logout!");
+    methods: {
+      getData() {
+        var uri = this.$apiUrl + "/user/" + profile.id_user;
+        this.$http.get(uri).then(response => {
+          this.profiles = response.data.message;
+        });
+      },
+      logout() {
+        localStorage.removeItem("token");
+        this.$router.push({
+          name: "loginLayout"
+        });
+        alert("Success Logout!");
+      },
+      getData() {
+        var uri = this.$apiUrl + "/user/" + profile.id_user;
+        this.$http.get(uri).then(response => {
+          this.profiles = response.data.message;
+        })
+      }
+    },
+     mounted() {
+      this.getData();
     }
-  }
   };
 </script>
