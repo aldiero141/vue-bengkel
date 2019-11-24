@@ -3,7 +3,7 @@
     <v-flex xs12 sm8 md4>
       <v-card class="elevation-12">
         <v-toolbar dark color="error">
-          <v-toolbar-title>Login Form</v-toolbar-title>
+          <v-toolbar-title>Login to Atma Bengkel</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
         <v-card-text>
@@ -13,6 +13,12 @@
             </v-text-field>
           </v-form>
         </v-card-text>
+        <v-card-text>
+          Dont have an account yet? <a href="/register">Register here</a>
+        </v-card-text>
+        <!-- <v-form>
+          <a>Dont have an account yet? Register here</a>
+        </v-form> -->
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="error" type='submit' @click='login()'>LOGIN</v-btn>
