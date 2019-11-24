@@ -135,7 +135,7 @@
         },
         methods: {
             getData() {
-                var uri = this.$apiUrl + '/sparepart'
+                var uri = this.$apiUrl + '/transaksi'
                 this.$http.get(uri).then(response => {
                     this.spareparts = response.data.message
                 })
