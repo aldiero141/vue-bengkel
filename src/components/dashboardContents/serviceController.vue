@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col>
-        <v-card class="mx-auto justify-center" color="blue accent-3" dark raised="4dp">
+        <v-card class="mx-auto justify-center" color="blue accent-3" dark>
           <v-row>
             <v-col>
               <v-card-title class="justify-center">
@@ -35,17 +35,17 @@
             <v-data-table :headers="headers" :items="services" :search="keyword" :loading="load">
               <template v-slot:body="{ items }">
                 <tbody>
-                  <tr v-for="(item,index) in items" :key="item.id">
+                  <tr v-for="(item,index) in items" :key="item.id_servis">
                     <td>{{ index + 1 }}</td>
-                    <td>{{ item.date }}</td>
-                    <td>{{ item.serviceType}}</td>
-                    <td>{{ item.licenseNumber }}</td>
-                    <td>{{ item.message }}</td>
+                    <td>{{ item.tgl_servis }}</td>
+                    <td>{{ item.jenis_servis }}</td>
+                    <td>{{ item.no_plat_servis }}</td>
+                    <td>{{ item.pesan }}</td>
                     <td class="text-center">
                       <v-btn icon color="indigo" light @click="editHandler(item)">
                         <v-icon>mdi-pencil</v-icon>
                       </v-btn>
-                      <v-btn icon color="error" light @click="deleteData(item.id)">
+                      <v-btn icon color="error" light @click="deleteData(item.id_servis)">
                         <v-icon>mdi-delete</v-icon>
                       </v-btn>
                     </td>
@@ -144,18 +144,19 @@
     },
     methods: {
       getData() {
-        var uri = this.$apiUrl + "/service";
+        var uri = this.$apiUrl + "/Servis";
         this.$http.get(uri).then(response => {
           this.services = response.data.message;
         });
       },
       sendData() {
 
-        this.service.append("date", this.form.date);
-        this.service.append("serviceType", this.form.serviceType);
-        this.service.append("licenseNumber", this.form.licenseNumber);
-        this.service.append("message", this.form.message);
-        var uri = this.$apiUrl + "/service";
+        this.service.append("tgl_servis", this.form.date);
+        this.service.append("jenis_servis", this.form.serviceType);
+        this.service.append("no_plat_servis", this.form.licenseNumber);
+        this.service.append("pesan", this.form.message);
+        
+        var uri = this.$apiUrl + "/Servis";
         this.load = true;
         this.$http
           .post(uri, this.service)
@@ -177,11 +178,11 @@
           });
       },
       updateData() {
-        this.service.append("date", this.form.date);
-        this.service.append("serviceType", this.form.serviceType);
-        this.service.append("licenseNumber", this.form.licenseNumber);
-        this.service.append("message", this.form.message);
-        var uri = this.$apiUrl + "/service/" + this.updatedId;
+        this.service.append("tgl_servis", this.form.date);
+        this.service.append("jenis_servis", this.form.serviceType);
+        this.service.append("no_plat_servis", this.form.licenseNumber);
+        this.service.append("pesan", this.form.message);
+        var uri = this.$apiUrl + "/servis/" + this.updatedId;
         this.load = true;
         this.$http
           .post(uri, this.service)
@@ -208,14 +209,14 @@
       editHandler(item) {
         this.typeInput = "edit";
         this.dialog = true;
-        this.form.date = item.date;
-        this.form.serviceType = item.serviceType;
-        this.form.licenseNumber = item.licenseNumber;
-        this.form.message = item.message;
-        (this.updatedId = item.id);
+        this.form.date = item.tgl_servis;
+        this.form.serviceType = item.jenis_servis;
+        this.form.licenseNumber = item.no_plat_servis;
+        this.form.message = item.pesan;
+        (this.updatedId = item.id_servis);
       },
       deleteData(deleteId) {
-        var uri = this.$apiUrl + "/service/" + deleteId;
+        var uri = this.$apiUrl + "/Servis/" + deleteId;
         this.$http
           .delete(uri)
           .then(response => {
