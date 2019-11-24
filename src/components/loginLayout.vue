@@ -3,7 +3,7 @@
     <v-flex xs12 sm8 md4>
       <v-card class="elevation-12">
         <v-toolbar dark color="error">
-          <v-toolbar-title>Login Form</v-toolbar-title>
+          <v-toolbar-title>Login to Atma Bengkel</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
         <v-card-text>

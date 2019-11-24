@@ -1,9 +1,9 @@
 <template>
-  <v-layout align-center justify-center style="margin-top:100px">
+  <v-layout align-center justify-center style="margin-top:50px">
     <v-flex xs12 sm8 md4>
       <v-card class="elevation-12">
         <v-toolbar dark color="error">
-          <v-toolbar-title>Register Form</v-toolbar-title>
+          <v-toolbar-title>Register to Atma Bengkel</v-toolbar-title>
           <v-spacer></v-spacer>
 
         </v-toolbar>
