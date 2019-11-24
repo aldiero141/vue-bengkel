@@ -2,7 +2,7 @@
     <v-container>
         <v-row>
             <v-col>
-                <v-card class="mx-auto justify-center" color="green darken-1" dark raised="4dp">
+                <v-card class="mx-auto justify-center" color="green darken-1" dark>
                     <v-row>
                         <v-col>
                             <v-card-title class="justify-center">
@@ -36,17 +36,17 @@
                         <v-data-table :headers="headers" :items="spareparts" :search="keyword" :loading="load">
                             <template v-slot:body="{ items }">
                                 <tbody>
-                                    <tr v-for="(item,index) in items" :key="item.id">
+                                    <tr v-for="(item,index) in items" :key="item.id_transaksi">
                                         <td>{{ index + 1 }}</td>
-                                        <td>{{ item.sparepart }}</td>
-                                        <td>{{ item.price }}</td>
-                                        <td>{{ item.amount }}</td>
-                                        <td>{{ item.totalPrice }}</td>
+                                        <td>{{ item.nama }}</td>
+                                        <td>{{ item.harga }}</td>
+                                        <td>{{ item.jumlah_beli }}</td>
+                                        <td>{{ item.total_harga }}</td>
                                         <td class="text-center">
                                             <v-btn icon color="indigo" light @click="editHandler(item)">
                                                 <v-icon>mdi-pencil</v-icon>
                                             </v-btn>
-                                            <v-btn icon color="error" light @click="deleteData(item.id)">
+                                            <v-btn icon color="error" light @click="deleteData(item.id_transaksi)">
                                                 <v-icon>mdi-delete</v-icon>
                                             </v-btn>
                                         </td>
@@ -63,19 +63,28 @@
                 <v-card-text>
                     <v-container>
                         <v-row>
-                            <v-col cols="12">
+                            <!-- <v-col cols="12">
                                 <v-text-field label="Sparepart*" v-model="form.sparepart" required>
                                 </v-text-field>
+                            </v-col> -->
+                            <v-col class="d-flex" cols="12" sm="12">
+                                <v-select
+                                :items="available_spareparts"
+                                label="Choose Sparepart"
+                                outlined
+                                v-model="form.sparepart" 
+                                item-text="nama_sparepart"
+                                ></v-select>
                             </v-col>
-                            <v-col cols="12">
+                            <!-- <v-col cols="12">
                                 <v-text-field label="Price*" v-model="form.price" required></v-text-field>
-                            </v-col>
+                            </v-col> -->
                             <v-col cols="12">
-                                <v-text-field label="Amount" v-model="form.amount"></v-text-field>
+                                <v-text-field label="Amount*" v-model="form.amount"></v-text-field>
                             </v-col>
-                            <v-col cols="12">
+                            <!-- <v-col cols="12">
                                 <v-text-field label="Total Price" v-model="form.totalPrice"></v-text-field>
-                            </v-col>
+                            </v-col> -->
                         </v-row>
                     </v-container> <small>*indicates required field</small>
                 </v-card-text>
@@ -102,30 +111,31 @@
                     value: 'no',
                 }, {
                     text: 'Sparepart',
-                    value: 'sparepart',
+                    value: 'nama',
                 }, {
                     text: 'Price (Rp)',
-                    value: 'price'
+                    value: 'harga'
                 }, {
                     text: 'Amount',
-                    value: 'amount'
+                    value: 'jumlah__beli'
                 }, {
                     text: 'Total Price (Rp)',
-                    value: 'totalPrice'
+                    value: 'total_harga'
                 }, {
                     text: 'Action',
                     value: null
                 }, ],
                 spareparts: [],
+                available_spareparts: [],
                 snackbar: false,
                 color: null,
                 text: '',
                 load: false,
                 form: {
                     sparepart: '',
-                    price: '',
+                    price: 0,
                     amount: '',
-                    totalPrice: ''
+                    totalPrice: 0
                 },
                 sparepart: new FormData,
                 typeInput: 'new',
@@ -136,16 +146,32 @@
         methods: {
             getData() {
                 var uri = this.$apiUrl + '/transaksi'
+                var uri_available_sparepart = this.$apiUrl + '/sparepart'
+
                 this.$http.get(uri).then(response => {
                     this.spareparts = response.data.message
                 })
+
+                this.$http.get(uri_available_sparepart).then(response => {
+                    this.available_spareparts = response.data.message
+                })
             },
             sendData() {
-                this.sparepart.append('sparepart', this.form.sparepart);
-                this.sparepart.append('price', this.form.price);
-                this.sparepart.append('amount', this.form.amount);
-                this.sparepart.append('totalPrice', this.form.totalPrice);
-                var uri = this.$apiUrl + '/sparepart'
+                var selected_item = this.form.sparepart
+
+                this.available_spareparts.forEach(e => {
+                    if ( e.nama_sparepart == selected_item ) {
+                        this.form.price = parseInt(e.harga_sparepart)
+                    }
+                });
+
+                this.form.totalPrice = parseInt(this.form.amount) * this.form.price;
+
+                this.sparepart.append('nama', this.form.sparepart);
+                this.sparepart.append('jumlah_beli', this.form.amount);
+                this.sparepart.append('harga', this.form.price);
+                this.sparepart.append('total_harga', this.form.totalPrice);
+                var uri = this.$apiUrl + '/transaksi'
                 this.load = true
                 this.$http.post(uri, this.sparepart).then(response => {
                     this.snackbar =
@@ -165,11 +191,21 @@
                 })
             },
             updateData() {
-                this.sparepart.append('sparepart', this.form.sparepart);
-                this.sparepart.append('price', this.form.price);
-                this.sparepart.append('amount', this.form.amount);
-                this.sparepart.append('totalPrice', this.form.totalPrice);
-                var uri = this.$apiUrl + '/sparepart/' + this.updatedId;
+                var selected_item = this.form.sparepart
+
+                this.available_spareparts.forEach(e => {
+                    if ( e.nama_sparepart == selected_item ) {
+                        this.form.price = parseInt(e.harga_sparepart)
+                    }
+                });
+
+                this.form.totalPrice = parseInt(this.form.amount) * this.form.price;
+                
+                this.sparepart.append('nama', this.form.sparepart);
+                this.sparepart.append('jumlah_beli', this.form.amount);
+                this.sparepart.append('harga', this.form.price);
+                this.sparepart.append('total_harga', this.form.totalPrice);
+                var uri = this.$apiUrl + '/transaksi/' + this.updatedId;
                 this.load = true
                 this.$http.post(uri, this.sparepart).then(response => {
                     this.snackbar = true; //mengaktifkan snackbar             
@@ -192,14 +228,14 @@
             editHandler(item) {
                 this.typeInput = 'edit';
                 this.dialog = true;
-                this.form.sparepart = item.sparepart;
-                this.form.price = item.price;
-                this.form.amount = item.amount;
-                // this.form.totalPrice = '',
-                this.updatedId = item.id
+                this.form.sparepart = item.nama;
+                this.form.price = item.harga;
+                this.form.amount = item.jumlah_beli;
+                this.form.totalPrice = item.total_harga,
+                (this.updatedId = item.id_transaksi);
             },
             deleteData(deleteId) { //mengahapus data      
-                var uri = this.$apiUrl + '/sparepart/' + deleteId; //data dihapus berdasarkan id 
+                var uri = this.$apiUrl + '/transaksi/' + deleteId; //data dihapus berdasarkan id 
 
                 this.$http.delete(uri).then(response => {
                     this.snackbar = true;
