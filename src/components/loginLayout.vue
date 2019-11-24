@@ -30,7 +30,7 @@
                 </v-layout>
                 <v-layout row>
                   <v-flex xs12>
-                    <v-btn type="submit">Login</v-btn>
+                    <v-btn @click="login()" type="submit">Login</v-btn>
                   </v-flex>
                 </v-layout>
               </form>
@@ -69,7 +69,26 @@
     methods: {
       onSignup () {
         this.$store.dispatch('signUserUp', {email: this.email, password: this.password})
-      }
+      },
+      login() {
+      var url = this.$apiUrl + "/Auth";
+
+      this.user = new FormData();
+      this.user.append("email", this.form.email);
+      this.user.append("password", this.form.password);
+
+      this.$http.post(url, this.user).then(response => {
+        if (response.data.token) {
+          localStorage.setItem("token", response.data.token);
+          this.$router.push({ name: "UserController" });
+        } else {
+          this.snackbar = true;
+          this.text = "Invalid Username or Password!";
+          this.color = "red";
+          this.load = false;
+        }
+      });
+    }
     }
   }
 </script>

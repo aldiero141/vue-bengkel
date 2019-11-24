@@ -3,46 +3,59 @@ import Router from 'vue-router';
 const DashboardLayout = () =>
   import('../components/dashboardLayout.vue');
 
-const LoginLayout = () => 
+const LoginLayout = () =>
   import('../components/loginLayout.vue');
 
-const RegisterLayout = () => 
+const RegisterLayout = () =>
   import('../components/registerLayout.vue');
 
-  function loadView(view) {
+function loadView(view) {
   return () =>
     import(`../components/dashboardContents/${view}.vue`);
 }
 
-const routes = [
-  {
+const routes = [{
     path: '/dashboard',
     component: DashboardLayout,
-    children: [
-      {
+    children: [{
         name: 'HomeController',
         path: '/home',
-        component: loadView('homeController')
+        component: loadView('homeController'),
+        beforeEnter(to, from, next) {
+          next();
+        }
       },
       {
         name: 'ServiceController',
         path: '/service',
-        component: loadView('serviceController')
+        component: loadView('serviceController'),
+        beforeEnter(to, from, next) {
+          next();
+        }
       },
       {
         name: 'SparepartController',
         path: '/sparepart',
-        component: loadView('sparepartController')
+        component: loadView('sparepartController'),
+        beforeEnter(to, from, next) {
+          next();
+        }
       },
       {
         name: 'TowingController',
         path: '/towing',
-        component: loadView('towingController')
+        component: loadView('towingController'),
+        beforeEnter(to, from, next) {
+          next();
+        }
       },
       {
         name: 'ProfileController',
         path: '/profile',
-        component: loadView('profileController')
+        component: loadView('profileController'),
+        beforeEnter(to, from, next) {
+          next();
+        }
       },
     ]
   },
@@ -56,8 +69,11 @@ const routes = [
     component: RegisterLayout,
     name: 'registerLayout',
   },
-  
+
 ];
 Vue.use(Router);
-const router = new Router({ mode: 'history', routes: routes });
+const router = new Router({
+  mode: 'history',
+  routes: routes
+});
 export default router;

@@ -88,7 +88,7 @@
           },
           {
             title: "Sign Out",
-            to: logout()
+           to: "/login"
           }
         ]
       };
