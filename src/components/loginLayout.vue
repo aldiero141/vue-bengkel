@@ -80,7 +80,7 @@
       this.$http.post(url, this.user).then(response => {
         if (response.data.token) {
           localStorage.setItem("token", response.data.token);
-          this.$router.push({ name: "UserController" });
+          this.$router.push({ name: "homeController" });
         } else {
           this.snackbar = true;
           this.text = "Invalid Username or Password!";
