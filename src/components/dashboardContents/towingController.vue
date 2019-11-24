@@ -34,17 +34,18 @@
             <v-data-table :headers="headers" :items="towings" :search="keyword" :loading="load">
               <template v-slot:body="{ items }">
                 <tbody>
-                  <tr v-for="(item,index) in items" :key="item.id_derek">
+                  <tr v-for="(item,index) in items" :key="item.id">
                     <td>{{ index + 1 }}</td>
+                    <td>{{ item.date }}</td>
                     <td>{{ item.merk }}</td>
-                    <td>{{ item.warna }}</td>
-                    <td>{{ item.no_plat_derek }}</td>
-                    <td>{{ item.lokasi }}</td>
+                    <td>{{ item.color }}</td>
+                    <td>{{ item.license_number }}</td>
+                    <td>{{ item.pickup_location }}</td>
                     <td class="text-center">
                       <v-btn icon color="indigo" light @click="editHandler(item)">
                         <v-icon>mdi-pencil</v-icon>
                       </v-btn>
-                      <v-btn icon color="error" light @click="deleteData(item.id_derek)">
+                      <v-btn icon color="error" light @click="deleteData(item.id)">
                         <v-icon>mdi-delete</v-icon>
                       </v-btn>
                     </td>
@@ -64,6 +65,9 @@
         <v-card-text>
           <v-container>
             <v-row>
+              <v-col cols="12">
+                <v-text-field label="Date*" v-model="form.date" required></v-text-field>
+              </v-col>
               <v-col cols="12">
                 <v-text-field label="Brand*" v-model="form.merk" required></v-text-field>
               </v-col>
@@ -104,6 +108,10 @@
             value: "no"
           },
           {
+            text: "Date",
+            value: "date"
+          },
+          {
             text: "Brand",
             value: "merk"
           },
@@ -130,6 +138,7 @@
         text: "",
         load: false,
         form: {
+          date: "",
           merk: "",
           color: "",
           license_number: "",
@@ -143,17 +152,24 @@
     },
     methods: {
       getData() {
-        var uri = this.$apiUrl + "/derek";
+        var uri = this.$apiUrl + "/towing";
         this.$http.get(uri).then(response => {
           this.towings = response.data.message;
         });
       },
       sendData() {
+        var created_at = new Date();
+        var dd = String(created_at.getDate()).padStart(2, '0');
+        var mm = String(created_at.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = created_at.getFullYear();
+        created_at = yyyy + '/' + mm + '/' + dd;
+
+        this.towing.append("date", this.form.date);
         this.towing.append("merk", this.form.merk);
-        this.towing.append("warna", this.form.color);
-        this.towing.append("no_plat_derek", this.form.license_number);
-        this.towing.append("lokasi", this.form.pickup_location);
-        var uri = this.$apiUrl + "/derek";
+        this.towing.append("color", this.form.color);
+        this.towing.append("license_number", this.form.license_number);
+        this.towing.append("pickup_location", this.form.pickup_location);
+        var uri = this.$apiUrl + "/towing";
         this.load = true;
         this.$http
           .post(uri, this.towing)
@@ -175,11 +191,12 @@
           });
       },
       updateData() {
+        this.towing.append("date", this.form.date);
         this.towing.append("merk", this.form.merk);
-        this.towing.append("warna", this.form.color);
-        this.towing.append("no_plat_derek", this.form.license_number);
-        this.towing.append("lokasi", this.form.pickup_location);
-        var uri = this.$apiUrl + "/derek/" + this.updatedId;
+        this.towing.append("color", this.form.color);
+        this.towing.append("license_number", this.form.license_number);
+        this.towing.append("pickup_location", this.form.pickup_location);
+        var uri = this.$apiUrl + "/towing/" + this.updatedId;
         this.load = true;
         this.$http
           .post(uri, this.towing)
@@ -206,14 +223,15 @@
       editHandler(item) {
         this.typeInput = "edit";
         this.dialog = true;
+        this.form.date = item.date;
         this.form.merk = item.merk;
-        this.form.color = item.warna;
-        this.form.license_number = item.no_plat_derek;
-        this.form.pickup_location = item.lokasi;
-        (this.updatedId = item.id_derek);
+        this.form.color = item.color;
+        this.form.license_number = item.license_number;
+        this.form.pickup_location = item.pickup_location;
+        (this.updatedId = item.id);
       },
       deleteData(deleteId) {
-        var uri = this.$apiUrl + "/derek/" + deleteId;
+        var uri = this.$apiUrl + "/towing/" + deleteId;
         this.$http
           .delete(uri)
           .then(response => {
@@ -240,6 +258,7 @@
       },
       resetForm() {
         this.form = {
+          date: "",
           merk: "",
           color: "",
           license_number: "",
