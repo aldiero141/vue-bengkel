@@ -1,74 +1,49 @@
 <template>
-  <v-container>
-    <v-layout row>
-      <v-flex xs12 sm6 offset-sm3>
-        <v-card>
-          <v-card-text>
-            <v-container>
-              <form @submit.prevent="onSignup">
-                 <v-layout row>
-                  <v-flex xs12>
-                    <v-text-field
-                      name="username"
-                      label="Username"
-                      id="username"
-                      v-model="username"
-                      type="username"
-                      required></v-text-field>
-                  </v-flex>
-                </v-layout>
-                <v-layout row>
-                  <v-flex xs12>
-                    <v-text-field
-                      name="password"
-                      label="Password"
-                      id="password"
-                      v-model="password"
-                      type="password"
-                      required></v-text-field>
-                  </v-flex>
-                </v-layout>
-                <v-layout row>
-                  <v-flex xs12>
-                    <v-btn type="submit">Login</v-btn>
-                  </v-flex>
-                </v-layout>
-              </form>
-            </v-container>
-          </v-card-text>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </v-container>
+  <v-layout align-center justify-center style="margin-top:100px">
+    <v-flex xs12 sm8 md4>
+      <v-row>
+        <h1> Welcome to PAW Bengkel </h1>
+      </v-row>
+      <v-card class="elevation-10 align-md-center">
+        <v-toolbar dark color="error">
+          <v-toolbar-title>PAW Bengkel Login</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+        <v-card-text>
+          <v-form>
+            <v-text-field v-model="username" label="Username" type="text">
+              <v-icon>mdi-heart</v-icon>
+            </v-text-field>
+            <v-text-field id="password" v-model="password" label="Password" type="password"></v-text-field>
+          </v-form>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="error" @click='logIn'>Login</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
+  </v-layout>
 </template>
+
 
 <script>
   export default {
-    data () {
+    data() {
       return {
-        email: '',
-        password: '',
-        confirmPassword: ''
-      }
-    },
-    computed: {
-      comparePasswords () {
-        return this.password !== this.confirmPassword ? 'Passwords do not match' : ''
-      },
-      user () {
-        return this.$store.getters.user
-      }
-    },
-    watch: {
-      user (value) {
-        if (value !== null && value !== undefined) {
-          this.$router.push('/')
-        }
+        email: null,
+        password: null
       }
     },
     methods: {
-      onSignup () {
-        this.$store.dispatch('signUserUp', {email: this.email, password: this.password})
+      logIn() {
+        this.$store.dispatch('login', {
+          email: this.email,
+          password: this.password
+        }).then(() => {
+          this.$router.push('/');
+        })
+
       }
     }
   }
