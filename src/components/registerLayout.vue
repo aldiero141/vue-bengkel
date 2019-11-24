@@ -1,97 +1,38 @@
 <template>
-  <v-container>
-    <v-layout row>
-      <v-flex xs12 sm6 offset-sm3>
-        <v-card>
-          <v-card-text>
-            <v-container>
-              <form @submit.prevent="onSignup">
-                <v-layout row>
-                  <v-flex xs12>
-                    <v-text-field
-                      name="email"
-                      label="Email"
-                      id="email"
-                      v-model="email"
-                      type="email"
-                      required></v-text-field>
-                  </v-flex>
-                </v-layout>
-                 <v-layout row>
-                  <v-flex xs12>
-                    <v-text-field
-                      name="username"
-                      label="Username"
-                      id="username"
-                      v-model="username"
-                      type="username"
-                      required></v-text-field>
-                  </v-flex>
-                </v-layout>
-                <v-layout row>
-                  <v-flex xs12>
-                    <v-text-field
-                      name="password"
-                      label="Password"
-                      id="password"
-                      v-model="password"
-                      type="password"
-                      required></v-text-field>
-                  </v-flex>
-                </v-layout>
-                <v-layout row>
-                  <v-flex xs12>
-                    <v-text-field
-                      name="confirmPassword"
-                      label="Confirm Password"
-                      id="confirmPassword"
-                      v-model="confirmPassword"
-                      type="password"
-                      :rules="[comparePasswords]"></v-text-field>
-                  </v-flex>
-                </v-layout>
-                <v-layout row>
-                  <v-flex xs12>
-                    <v-text-field
-                      name="nama"
-                      label="Name"
-                      id="nama"
-                      v-model="nama"
-                      type="nama"
-                    ></v-text-field>
-                  </v-flex>
-                </v-layout>
-                  <v-layout row>
-                  <v-flex xs12>
-                    <v-text-field
-                      name="tgl_lahir"
-                      label="Birthdate"
-                      id="tgl_lahir"
-                      v-model="tgl_lahir"
-                      type="tgl_lahir"
-                    ></v-text-field>
-                  </v-flex>
-                </v-layout>
-                <v-layout row>
-                  <v-flex xs12>
-                    <v-btn type="submit">Sign up</v-btn>
-                  </v-flex>
-                </v-layout>
-              </form>
-            </v-container>
-          </v-card-text>
-        </v-card>
-      </v-flex>
-    </v-layout>
-  </v-container>
+        <v-layout align-center justify-center style="margin-top:100px">
+          <v-flex xs12 sm8 md4>
+            <v-card class="elevation-12">
+              <v-toolbar dark color="error">
+                <v-toolbar-title>Register Form</v-toolbar-title>
+                <v-spacer></v-spacer>
+               
+              </v-toolbar>
+              <v-card-text>
+                <v-form>
+                  <v-text-field v-model="nama" label="Name" type="text"></v-text-field>
+                  <v-text-field v-model="tgl_lahir" label="Birhdate" type="date"></v-text-field>
+                  <v-text-field v-model="email" label="Email" type="email"></v-text-field>
+                  <v-text-field id="password" v-model="password" label="Password" type="password" name="password" required></v-text-field>
+                  <v-text-field id="confirmPassword" v-model="confirmPassword" label="Confirm Password" name="confirmPassword" type="password" :rules="[comparePasswords]"></v-text-field>                  
+                </v-form>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="error" type='submit' @click='registerUser'>REGISTER</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-flex>
+        </v-layout>
 </template>
 
-<script>
-  export default {
-    data () {
+<script>  
+export default {
+    data(){
       return {
-        email: '',
-        password: '',
+        email:'',
+        tgl_lahir: '',
+        nama:'',
+        password:'',
         confirmPassword: ''
       }
     },
@@ -99,21 +40,17 @@
       comparePasswords () {
         return this.password !== this.confirmPassword ? 'Passwords do not match' : ''
       },
-      user () {
+       user () {
         return this.$store.getters.user
       }
     },
-    watch: {
-      user (value) {
-        if (value !== null && value !== undefined) {
-          this.$router.push('/')
-        }
-      }
-    },
     methods: {
-      onSignup () {
-        this.$store.dispatch('signUserUp', {email: this.email, password: this.password})
+      registerUser(){
+        this.$store.dispatch('register',{name:this.name,email:this.email,password:this.password}).then(()=>{
+            this.$router.push('/');
+        })
+        
       }
     }
-  }
+}
 </script>
