@@ -6,7 +6,7 @@
                     <v-card-title class="headline">
                         <h2>Welcome !</h2>
                     </v-card-title>
-                    
+
                 </v-card>
             </v-col>
         </v-row>
@@ -55,6 +55,21 @@
                 </v-card>
             </v-col>
         </v-row>
+
+        <v-row>
+            <v-col>
+                <v-card class="geolocation">
+                    <v-card-title class="headline">Find Us</v-card-title>
+                    <div>
+                        <div class="mapouter">
+                            <div class="gmap_canvas">
+                                <iframe id="gmap_canavas" width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJ2bND4e9Zei4RZTdsKR3y3kg&key=AIzaSyDwqex9g59_k5Dpkets81KieRPpKSxboqg" allowfullscreen></iframe> 
+                            </div>
+                        </div>
+                    </div>
+                </v-card>
+            </v-col>
+        </v-row>
     </v-container>
 </template>
 <script>
@@ -62,3 +77,23 @@
 
     }
 </script>
+<style>
+    .mapouter {
+        text-align: right;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+    }
+
+    .gmap_canvas {
+        /* overflow: scroll; */
+        background: none !important;
+        height: 100%;
+        width: 100%;
+    }
+    .geolocation{
+        height: 500px;
+        margin-bottom: 70px;
+    }
+
+</style>

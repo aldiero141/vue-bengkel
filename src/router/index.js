@@ -3,14 +3,20 @@ import Router from 'vue-router';
 const DashboardLayout = () =>
   import('../components/dashboardLayout.vue');
 
-function loadView(view) {
+const LoginLayout = () => 
+  import('../components/loginLayout.vue');
+
+const RegisterLayout = () => 
+  import('../components/registerLayout.vue');
+
+  function loadView(view) {
   return () =>
     import(`../components/dashboardContents/${view}.vue`);
 }
 
 const routes = [
   {
-    path: '/',
+    path: '/dashboard',
     component: DashboardLayout,
     children: [
       {
@@ -39,7 +45,18 @@ const routes = [
         component: loadView('profileController')
       },
     ]
-  }
+  },
+  {
+    path: '/',
+    component: LoginLayout,
+    name: 'loginLayout',
+  },
+  {
+    path: '/register',
+    component: RegisterLayout,
+    name: 'registerLayout',
+  },
+  
 ];
 Vue.use(Router);
 const router = new Router({ mode: 'history', routes: routes });

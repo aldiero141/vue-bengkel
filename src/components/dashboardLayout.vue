@@ -88,10 +88,17 @@
           },
           {
             title: "Sign Out",
-            to: "/signOut"
+            to: logout()
           }
         ]
       };
+    },
+  methods:{
+    logout() {
+      localStorage.removeItem("token");
+      this.$router.push({ name: "loginLayout" });
+      alert("Success Logout!");
     }
+  }
   };
 </script>
