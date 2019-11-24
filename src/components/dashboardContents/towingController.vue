@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col>
-        <v-card class="mx-auto justify-center" color="deep-orange lighten-1" dark raised="4dp">
+        <v-card class="mx-auto justify-center" color="deep-orange lighten-1" dark>
           <v-row>
             <v-col>
               <v-card-title class="justify-center">

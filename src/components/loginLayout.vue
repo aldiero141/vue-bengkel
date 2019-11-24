@@ -55,7 +55,7 @@
           if (response.data.token) {
             localStorage.setItem("token", response.data.token);
             this.$router.push({
-              name: "homeController"
+              name: "HomeController"
             });
           } else {
             this.snackbar = true;
