@@ -6,11 +6,11 @@
       </v-toolbar-items>
       <v-spacer />
 
-      <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="100" offset-x
-        transition="slide-x-reverse-transition" bottom>
+      <v-menu :close-on-content-click="false" :nudge-width="100" offset-x transition="slide-x-reverse-transition"
+        bottom >
         <template v-slot:activator="{ on }">
           <v-btn text dark v-on="on">
-            {{profile.username}}Username<v-icon>mdi-menu-down</v-icon>
+            Account<v-icon>mdi-menu-down</v-icon>
           </v-btn>
           <v-avatar>
             <img src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png" alt="John">
@@ -65,13 +65,14 @@
 </template>
 
 <script>
-  import VueSession from 'vue-session'
+  
   export default {
     data() {
       return {
         drawer: null,
         profiles: [],
         profile: new FormData(),
+        username: '',
         footer: {
           inset: false,
         },
@@ -104,35 +105,17 @@
       };
     },
     methods: {
-      getData() {
-        if (this.$session.exists() == false) {
-
-        } else {
-          var uri = this.$apiUrl + "/user/" + this.$session.get('id_user');
-          this.$http.get(uri).then(response => {
-            this.profiles = response.data.data
-            this.currentUser = this.$session.get('id_user')
-            console.log(this.currentUser)
-          });
-        }
-      },
-      getAccInfo() {
-        var uri = this.$apiUrl + '/login/' + this.$session.get('id_user')
-        this.$http.get(uri).then(response => {
-          this.user = response.data.message;
-          this.currentRole = this.user[0].role;
-        })
-      },
 
       logout() {
-        this.$session.destroy();
+        localStorage.removeItem("token");
         this.$router.push({
           name: "loginLayout"
         });
         alert("Success Logout!");
       },
+
       getData() {
-        var uri = this.$apiUrl + "/user/" + profile.id_user;
+        var uri = this.$apiUrl + "/user/" + this.id_user;
         this.$http.get(uri).then(response => {
           this.profiles = response.data.message;
         })
@@ -140,7 +123,9 @@
     },
     mounted() {
       this.getData();
-      this.getAccInfo();
-    }
+      if (localStorage.id_user) {
+        this.id_user = localStorage.id_user;
+      }
+    },
   };
 </script>

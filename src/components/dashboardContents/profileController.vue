@@ -9,7 +9,7 @@
                 <img src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png" alt="John">
               </v-avatar>
             </v-col>
-            <v-col class="ma-10 my-1" v-for="profile in profiles" :key="profile.username">
+            <v-col class="ma-10 my-1" v-for="profile in profiles" :key="profile.id_user">
               <v-card-title>
                 <h2>My Profile</h2>
               </v-card-title>
@@ -28,7 +28,7 @@
               <v-spacer />
               <v-spacer />
               <v-spacer />
-              <v-col v-for="profile in profiles" :key="profile.username">
+              <v-col v-for="profile in profiles" :key="profile.id_user">
                 <v-spacer></v-spacer>
                 <v-btn class="ma-2" depressed dark rounded style="text-transform: none !important;"
                   color="blue accent-3" @click="editHandler(profile)">
@@ -50,7 +50,7 @@
                 <h2>User Info</h2>
               </v-card-title>
               <v-divider></v-divider>
-              <v-col v-for="profile in profiles" :key="profile.username">
+              <v-col v-for="profile in profiles" :key="profile.id_user">
                 <v-card-title>Name</v-card-title>
                 <v-card-subtitle>{{ profile.nama }}</v-card-subtitle>
 
@@ -102,7 +102,6 @@
   </v-container>
 </template>
 <script>
-import VueSession from 'vue-session'
   export default {
     data() {
       return {
@@ -113,6 +112,7 @@ import VueSession from 'vue-session'
         color: null,
         text: "",
         load: false,
+        id_user: '',
         form: {
           name: "",
           username: "",
@@ -126,27 +126,13 @@ import VueSession from 'vue-session'
       };
     },
     methods: {
-      getData() {
-        if (this.$session.exists() == false) {
+       getData() {
 
-        } else {
-
-          var uri = this.$apiUrl + '/user/' + this.$session.get('id_user')
-          this.$http.get(uri).then(response => {
-              this.user = response.data.data
-              this.currentUser = this.$session.get('username')
-              console.log(this.currentUser)
-            }
-          );
-        }
-      },
-
-      getAccInfo() {
-        var uri = this.$apiUrl + '/login/' + this.$session.get('id_user')
+        var uri = this.$apiUrl + "/user/" + this.id_user;
         this.$http.get(uri).then(response => {
-          this.user = response.data.message;
-          this.currentRole = this.user[0].role;
-        })
+          this.services = response.data.message;
+        });
+
       },
 
       sendData() {
@@ -180,7 +166,7 @@ import VueSession from 'vue-session'
         this.profile.append("username", this.form.username);
         this.profile.append("email", this.form.email);
         this.profile.append("tgl_lahir", this.form.dateofbirth);
-        var uri = this.$apiUrl + "/user/" + this.$session.get('id_user');
+        var uri = this.$apiUrl + "/user/" + this.id_user;
         this.load = true;
         this.$http
           .post(uri, this.profile)
@@ -232,7 +218,9 @@ import VueSession from 'vue-session'
     },
     mounted() {
       this.getData();
-      this.getAccInfo();
+      if (localStorage.id_user) {
+        this.id_user = localStorage.id_user;
+      }
     }
   };
 </script>

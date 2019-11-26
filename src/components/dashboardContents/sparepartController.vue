@@ -100,6 +100,7 @@
         data() {
             return {
                 dialog: false,
+                id_user: '',
                 keyword: '',
                 headers: [{
                     text: 'No',
@@ -274,8 +275,10 @@
             }
         },
         mounted() {
-            this.getData();
-            this.getAccInfo();
-        },
+      this.getData();
+      if (localStorage.id_user) {
+        this.id_user = localStorage.id_user;
+      }
+    },
     }
 </script>

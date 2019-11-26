@@ -50,13 +50,14 @@
       // onSignup () {
       //   this.$store.dispatch('signUserUp', {email: this.email, password: this.password})
       // },
-      login() {
-        this.users.append('username', this.user.username);
-        this.users.append('password', this.user.password);
-        
-        var uri = this.$apiUrl + '/user/login'
+/*      login() {
+        this.user = new FormData();
+        this.user.append('username', this.username);
+        this.user.append('password', this.password);
+
+        var uri = this.$apiUrl + '/user/login';
         this.load = true;
-        this.$http.post(uri, this.users).then(response => {
+        this.$http.post(uri, this.user).then(response => {
           if (response.data.error == true) {
             console.log(response.data.error);
             this.alert = true; //mengaktifkan snackbar
@@ -90,9 +91,9 @@
           this.load = false;
           this.type = 'error'
         })
-      },
+      },*/
 
-      /*login() {
+      login() {
         var url = this.$apiUrl + "/Auth";
 
         this.user = new FormData();
@@ -103,6 +104,8 @@
           // console.log("sudah bisa post")
           if (response.data.token) {
             localStorage.setItem("token", response.data.token);
+            localStorage.setItem("id_user", response.data.id_user);
+            console.log(localStorage.id_user)
             this.$router.push({
               name: "HomeController"
             });
@@ -114,7 +117,7 @@
             this.load = false;
           }
         });
-      }*/
+      }
     }
   }
 </script>

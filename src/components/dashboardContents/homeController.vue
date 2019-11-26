@@ -2,7 +2,7 @@
     <v-container>
         <v-row>
             <v-col>
-                <v-card class="mx-auto" color="blue lighten-1" dark raised="4dp">
+                <v-card class="mx-auto" color="blue lighten-1" dark>
                     <v-card-title class="headline">
                         <h2>Welcome !</h2>
                     </v-card-title>
@@ -78,13 +78,36 @@
     import VueSession from 'vue-session'
 
     export default {
+        data() {
+            return {
+                username: '',
+                password: '',
+                snackbar: false,
+                color: null,
+                text: '',
+                id_user: '',
+                dialog: false,
+                keyword: "",
+                profiles: [],
+                load: false,
+                form: {
+                    name: "",
+                    username: "",
+                    email: "",
+                    dateofbirth: ""
+                },
+                profile: new FormData(),
+                typeInput: "new",
+                errors: "",
+                updatedId: ""
+            }
+        },
         methods: {
             getData() {
-
-                var uri = this.$apiUrl + '/user/' + this.$session.get('id_user')
+                var uri = this.$apiUrl + '/user/' + this.id_user
                 this.$http.get(uri).then(response => {
                     this.user = response.data.data
-                    this.currentUser = this.$session.get('username')
+                    this.currentUser = this.id_user
                     console.log(this.currentUser)
                 });
 
@@ -99,8 +122,11 @@
         },
         mounted() {
             this.getData();
-            this.getAccInfo();
-        }
+            //this.getAccInfo();
+            if (localStorage.username) {
+                this.username = localStorage.username;
+            }
+        },
     }
 </script>
 <style>

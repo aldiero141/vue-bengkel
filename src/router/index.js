@@ -14,6 +14,12 @@ function loadView(view) {
     import(`../components/dashboardContents/${view}.vue`);
 }
 
+function isAuthenticated() {
+  if (localStorage.getItem('token') == null) {
+    return true;
+  }
+}
+
 const routes = [{
     path: '/dashboard',
     component: DashboardLayout,
@@ -21,31 +27,66 @@ const routes = [{
         name: 'HomeController',
         path: '/home',
         component: loadView('homeController'),
-
+        beforeEnter(to, from, next) {
+          if (!isAuthenticated()) {
+            next();
+          } else {
+            next('/');
+            alert('Please Login to Continue!');
+          }
+        }
       },
       {
         name: 'ServiceController',
         path: '/service',
         component: loadView('serviceController'),
-
+        beforeEnter(to, from, next) {
+          if (!isAuthenticated()) {
+            next();
+          } else {
+            next('/');
+            alert('Please Login to Continue!');
+          }
+        }
       },
       {
         name: 'SparepartController',
         path: '/sparepart',
         component: loadView('sparepartController'),
-
+        beforeEnter(to, from, next) {
+          if (!isAuthenticated()) {
+            next();
+          } else {
+            next('/');
+            alert('Please Login to Continue!');
+          }
+        }
       },
       {
         name: 'TowingController',
         path: '/towing',
         component: loadView('towingController'),
-
+        beforeEnter(to, from, next) {
+          if (!isAuthenticated()) {
+            next();
+          } else {
+            next('/');
+            alert('Please Login to Continue!');
+          }
+        }
       },
       {
         name: 'ProfileController',
         path: '/profile',
         component: loadView('profileController'),
-
+        beforeEnter(to, from, next) {
+          if (!isAuthenticated()) {
+            next();
+          } else {
+            next('/');
+            alert('Please Login to Continue!');
+          }
+        }
       }
     ]
   },
@@ -53,6 +94,13 @@ const routes = [{
     path: '/',
     component: LoginLayout,
     name: 'loginLayout',
+    beforeEnter(to, from, next) {
+      if (isAuthenticated()) {
+        next();
+      } else {
+        next('/home');
+      }
+    }
   },
   {
     path: '/register',

@@ -100,6 +100,7 @@
     data() {
       return {
         dialog: false,
+        id_user: '',
         keyword: "",
         headers: [{
             text: "No",
@@ -152,13 +153,6 @@
 
       },
 
-      getAccInfo() {
-        var uri = this.$apiUrl + '/login/' + this.$session.get('id_user')
-        this.$http.get(uri).then(response => {
-          this.user = response.data.message;
-          this.currentRole = this.user[0].role;
-        })
-      },
 
       sendData() {
 
@@ -263,7 +257,9 @@
     },
     mounted() {
       this.getData();
-      this.getAccInfo();
-    }
+      if (localStorage.id_user) {
+        this.id_user = localStorage.id_user;
+      }
+    },
   };
 </script>
