@@ -80,20 +80,26 @@
     export default {
         methods: {
             getData() {
-                if (this.$session.exists() == false) {
 
-                } else {
-                    var uri = this.$apiUrl + '/user/' + this.$session.get('id_user')
-                    this.$http.get(uri).then(response => {
-                        this.user = response.data.data
-                        this.currentUser = this.$session.get('username')
-                        console.log(this.currentUser)
-                    });
-                }
+                var uri = this.$apiUrl + '/user/' + this.$session.get('id_user')
+                this.$http.get(uri).then(response => {
+                    this.user = response.data.data
+                    this.currentUser = this.$session.get('username')
+                    console.log(this.currentUser)
+                });
+
             },
+        },
+        getAccInfo() {
+            var uri = this.$apiUrl + '/login/' + this.$session.get('id_user')
+            this.$http.get(uri).then(response => {
+                this.user = response.data.message;
+                this.currentRole = this.user[0].role;
+            })
         },
         mounted() {
             this.getData();
+            this.getAccInfo();
         }
     }
 </script>

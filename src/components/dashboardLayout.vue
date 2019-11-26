@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import VueSession from 'vue-session'
+  import VueSession from 'vue-session'
   export default {
     data() {
       return {
@@ -108,14 +108,22 @@ import VueSession from 'vue-session'
         if (this.$session.exists() == false) {
 
         } else {
-          var uri = this.$apiUrl + "/user/" + this.$session.get('username');
-            this.$http.get(uri).then(response => {
+          var uri = this.$apiUrl + "/user/" + this.$session.get('id_user');
+          this.$http.get(uri).then(response => {
             this.profiles = response.data.data
-            this.currentUser = this.$session.get('username')
+            this.currentUser = this.$session.get('id_user')
             console.log(this.currentUser)
           });
         }
       },
+      getAccInfo() {
+        var uri = this.$apiUrl + '/login/' + this.$session.get('id_user')
+        this.$http.get(uri).then(response => {
+          this.user = response.data.message;
+          this.currentRole = this.user[0].role;
+        })
+      },
+
       logout() {
         this.$session.destroy();
         this.$router.push({
@@ -132,6 +140,7 @@ import VueSession from 'vue-session'
     },
     mounted() {
       this.getData();
+      this.getAccInfo();
     }
   };
 </script>

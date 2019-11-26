@@ -143,15 +143,21 @@
     },
     methods: {
       getData() {
-        if (this.$session.exists() == false) {
-
-        } else {
+        
           var uri = this.$apiUrl + "/derek";
           this.$http.get(uri).then(response => {
             this.towings = response.data.message;
           });
-        }
       },
+
+      getAccInfo() {
+        var uri = this.$apiUrl + '/login/' + this.$session.get('id_user')
+        this.$http.get(uri).then(response => {
+          this.user = response.data.message;
+          this.currentRole = this.user[0].role;
+        })
+      },
+
       sendData() {
         this.towing.append("merk", this.form.merk);
         this.towing.append("warna", this.form.color);
@@ -253,6 +259,7 @@
     },
     mounted() {
       this.getData();
+      this.getAccInfo();
     }
   };
 </script>

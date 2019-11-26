@@ -140,6 +140,15 @@ import VueSession from 'vue-session'
           );
         }
       },
+
+      getAccInfo() {
+        var uri = this.$apiUrl + '/login/' + this.$session.get('id_user')
+        this.$http.get(uri).then(response => {
+          this.user = response.data.message;
+          this.currentRole = this.user[0].role;
+        })
+      },
+
       sendData() {
         this.profile.append("name", this.form.name);
         this.profile.append("username", this.form.username);
@@ -223,6 +232,7 @@ import VueSession from 'vue-session'
     },
     mounted() {
       this.getData();
+      this.getAccInfo();
     }
   };
 </script>

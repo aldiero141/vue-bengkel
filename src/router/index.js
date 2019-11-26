@@ -14,13 +14,6 @@ function loadView(view) {
     import(`../components/dashboardContents/${view}.vue`);
 }
 
-function isAuthenticated() {
-  if (localStorage.getItem('token') == null) {
-    return true;
-  }
-}
-
-
 const routes = [{
     path: '/dashboard',
     component: DashboardLayout,

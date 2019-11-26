@@ -144,15 +144,22 @@
     },
     methods: {
       getData() {
-        if (this.$session.exists() == false) {
 
-        } else {
-          var uri = this.$apiUrl + "/Servis";
-          this.$http.get(uri).then(response => {
-            this.services = response.data.message;
-          });
-        }
+        var uri = this.$apiUrl + "/Servis";
+        this.$http.get(uri).then(response => {
+          this.services = response.data.message;
+        });
+
       },
+
+      getAccInfo() {
+        var uri = this.$apiUrl + '/login/' + this.$session.get('id_user')
+        this.$http.get(uri).then(response => {
+          this.user = response.data.message;
+          this.currentRole = this.user[0].role;
+        })
+      },
+
       sendData() {
 
         this.service.append("tgl_servis", this.form.date);
@@ -256,6 +263,7 @@
     },
     mounted() {
       this.getData();
+      this.getAccInfo();
     }
   };
 </script>

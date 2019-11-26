@@ -140,21 +140,28 @@
         },
         methods: {
             getData() {
-                if (this.$session.exists() == false) {
 
-                } else {
-                    var uri = this.$apiUrl + '/transaksi'
-                    var uri_available_sparepart = this.$apiUrl + '/sparepart'
+                var uri = this.$apiUrl + '/transaksi'
+                var uri_available_sparepart = this.$apiUrl + '/sparepart'
 
-                    this.$http.get(uri).then(response => {
-                        this.spareparts = response.data.message
-                    })
+                this.$http.get(uri).then(response => {
+                    this.spareparts = response.data.message
+                })
 
-                    this.$http.get(uri_available_sparepart).then(response => {
-                        this.available_spareparts = response.data.message
-                    })
-                }
+                this.$http.get(uri_available_sparepart).then(response => {
+                    this.available_spareparts = response.data.message
+                })
+
             },
+
+            getAccInfo() {
+                var uri = this.$apiUrl + '/login/' + this.$session.get('id_user')
+                this.$http.get(uri).then(response => {
+                    this.user = response.data.message;
+                    this.currentRole = this.user[0].role;
+                })
+            },
+
             sendData() {
                 var selected_item = this.form.sparepart
 
@@ -268,6 +275,7 @@
         },
         mounted() {
             this.getData();
+            this.getAccInfo();
         },
     }
 </script>
