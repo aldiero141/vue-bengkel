@@ -9,7 +9,7 @@
                 <img src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png" alt="John">
               </v-avatar>
             </v-col>
-            <v-col class="ma-10 my-1" v-for="profile in profiles" :key="profile.id_user">
+            <v-col class="ma-10 my-1" v-for="profile in profiles" :key="profile.username">
               <v-card-title>
                 <h2>My Profile</h2>
               </v-card-title>
@@ -28,7 +28,7 @@
               <v-spacer />
               <v-spacer />
               <v-spacer />
-              <v-col v-for="profile in profiles" :key="profile.id_user">
+              <v-col v-for="profile in profiles" :key="profile.username">
                 <v-spacer></v-spacer>
                 <v-btn class="ma-2" depressed dark rounded style="text-transform: none !important;"
                   color="blue accent-3" @click="editHandler(profile)">
@@ -50,7 +50,7 @@
                 <h2>User Info</h2>
               </v-card-title>
               <v-divider></v-divider>
-              <v-col v-for="profile in profiles" :key="profile.id_user">
+              <v-col v-for="profile in profiles" :key="profile.username">
                 <v-card-title>Name</v-card-title>
                 <v-card-subtitle>{{ profile.nama }}</v-card-subtitle>
 
@@ -102,6 +102,7 @@
   </v-container>
 </template>
 <script>
+import VueSession from 'vue-session'
   export default {
     data() {
       return {
@@ -126,10 +127,18 @@
     },
     methods: {
       getData() {
-        var uri = this.$apiUrl + "/user/" + profile.id_user;
-        this.$http.get(uri).then(response => {
-          this.profiles = response.data.message;
-        });
+        if (this.$session.exists() == false) {
+
+        } else {
+
+          var uri = this.$apiUrl + '/user/' + this.$session.get('id_user')
+          this.$http.get(uri).then(response => {
+              this.user = response.data.data
+              this.currentUser = this.$session.get('username')
+              console.log(this.currentUser)
+            }
+          );
+        }
       },
       sendData() {
         this.profile.append("name", this.form.name);
@@ -162,7 +171,7 @@
         this.profile.append("username", this.form.username);
         this.profile.append("email", this.form.email);
         this.profile.append("tgl_lahir", this.form.dateofbirth);
-        var uri = this.$apiUrl + "/user/" + this.updatedId;
+        var uri = this.$apiUrl + "/user/" + this.$session.get('id_user');
         this.load = true;
         this.$http
           .post(uri, this.profile)
@@ -194,24 +203,6 @@
         this.form.email = profile.email;
         this.form.dateofbirth = profile.tgl_lahir;
         (this.updatedId = profile.id_user);
-      },
-      deleteData(deleteId) {
-        var uri = this.$apiUrl + "/user/" + deleteId;
-        this.$http
-          .delete(uri)
-          .then(response => {
-            this.snackbar = true;
-            this.text = response.data.message;
-            this.color = "green";
-            this.deleteDialog = false;
-            this.getData();
-          })
-          .catch(error => {
-            this.errors = error;
-            this.snackbar = true;
-            this.text = "Try Again";
-            this.color = "red";
-          });
       },
       setForm() {
         if (this.typeInput === "new") {

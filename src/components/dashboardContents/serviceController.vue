@@ -144,10 +144,14 @@
     },
     methods: {
       getData() {
-        var uri = this.$apiUrl + "/Servis";
-        this.$http.get(uri).then(response => {
-          this.services = response.data.message;
-        });
+        if (this.$session.exists() == false) {
+
+        } else {
+          var uri = this.$apiUrl + "/Servis";
+          this.$http.get(uri).then(response => {
+            this.services = response.data.message;
+          });
+        }
       },
       sendData() {
 
@@ -155,7 +159,7 @@
         this.service.append("jenis_servis", this.form.serviceType);
         this.service.append("no_plat_servis", this.form.licenseNumber);
         this.service.append("pesan", this.form.message);
-        
+
         var uri = this.$apiUrl + "/Servis";
         this.load = true;
         this.$http

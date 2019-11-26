@@ -9,7 +9,7 @@
       <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="100" offset-x
         transition="slide-x-reverse-transition" bottom>
         <template v-slot:activator="{ on }">
-          <v-btn text dark v-on="on" >
+          <v-btn text dark v-on="on">
             {{profile.username}}Username<v-icon>mdi-menu-down</v-icon>
           </v-btn>
           <v-avatar>
@@ -32,13 +32,13 @@
           <v-list>
             <v-list-item>
               <v-list-item-content>
-                <v-btn depressed dark style="text-transform: none !important;"
-                  color="blue accent-3" @click="$router.push('/profile')" >Profile</v-btn>
-                
-              <v-btn depressed dark style="text-transform: none !important;"
-                  color="red accent-3" @click="logout()">Sign Out</v-btn>
+                <v-btn depressed dark style="text-transform: none !important;" color="blue accent-3"
+                  @click="$router.push('/profile')">Profile</v-btn>
+
+                <v-btn depressed dark style="text-transform: none !important;" color="red accent-3" @click="logout()">
+                  Sign Out</v-btn>
               </v-list-item-content>
-              
+
             </v-list-item>
           </v-list>
         </v-card>
@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import VueSession from 'vue-session'
   export default {
     data() {
       return {
@@ -104,13 +105,19 @@
     },
     methods: {
       getData() {
-        var uri = this.$apiUrl + "/user/" + profile.id_user;
-        this.$http.get(uri).then(response => {
-          this.profiles = response.data.message;
-        });
+        if (this.$session.exists() == false) {
+
+        } else {
+          var uri = this.$apiUrl + "/user/" + this.$session.get('username');
+            this.$http.get(uri).then(response => {
+            this.profiles = response.data.data
+            this.currentUser = this.$session.get('username')
+            console.log(this.currentUser)
+          });
+        }
       },
       logout() {
-        localStorage.removeItem("token");
+        this.$session.destroy();
         this.$router.push({
           name: "loginLayout"
         });
@@ -123,7 +130,7 @@
         })
       }
     },
-     mounted() {
+    mounted() {
       this.getData();
     }
   };

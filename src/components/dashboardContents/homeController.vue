@@ -63,7 +63,9 @@
                     <div>
                         <div class="mapouter">
                             <div class="gmap_canvas">
-                                <iframe id="gmap_canavas" width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJ2bND4e9Zei4RZTdsKR3y3kg&key=AIzaSyDwqex9g59_k5Dpkets81KieRPpKSxboqg" allowfullscreen></iframe> 
+                                <iframe id="gmap_canavas" width="100%" height="100%" frameborder="0" style="border:0"
+                                    src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJ2bND4e9Zei4RZTdsKR3y3kg&key=AIzaSyDwqex9g59_k5Dpkets81KieRPpKSxboqg"
+                                    allowfullscreen></iframe>
                             </div>
                         </div>
                     </div>
@@ -73,8 +75,26 @@
     </v-container>
 </template>
 <script>
-    export default {
+    import VueSession from 'vue-session'
 
+    export default {
+        methods: {
+            getData() {
+                if (this.$session.exists() == false) {
+
+                } else {
+                    var uri = this.$apiUrl + '/user/' + this.$session.get('id_user')
+                    this.$http.get(uri).then(response => {
+                        this.user = response.data.data
+                        this.currentUser = this.$session.get('username')
+                        console.log(this.currentUser)
+                    });
+                }
+            },
+        },
+        mounted() {
+            this.getData();
+        }
     }
 </script>
 <style>
@@ -91,9 +111,9 @@
         height: 100%;
         width: 100%;
     }
-    .geolocation{
+
+    .geolocation {
         height: 500px;
         margin-bottom: 70px;
     }
-
 </style>

@@ -68,13 +68,8 @@
                                 </v-text-field>
                             </v-col> -->
                             <v-col class="d-flex" cols="12" sm="12">
-                                <v-select
-                                :items="available_spareparts"
-                                label="Choose Sparepart"
-                                outlined
-                                v-model="form.sparepart" 
-                                item-text="nama_sparepart"
-                                ></v-select>
+                                <v-select :items="available_spareparts" label="Choose Sparepart" outlined
+                                    v-model="form.sparepart" item-text="nama_sparepart"></v-select>
                             </v-col>
                             <!-- <v-col cols="12">
                                 <v-text-field label="Price*" v-model="form.price" required></v-text-field>
@@ -145,22 +140,26 @@
         },
         methods: {
             getData() {
-                var uri = this.$apiUrl + '/transaksi'
-                var uri_available_sparepart = this.$apiUrl + '/sparepart'
+                if (this.$session.exists() == false) {
 
-                this.$http.get(uri).then(response => {
-                    this.spareparts = response.data.message
-                })
+                } else {
+                    var uri = this.$apiUrl + '/transaksi'
+                    var uri_available_sparepart = this.$apiUrl + '/sparepart'
 
-                this.$http.get(uri_available_sparepart).then(response => {
-                    this.available_spareparts = response.data.message
-                })
+                    this.$http.get(uri).then(response => {
+                        this.spareparts = response.data.message
+                    })
+
+                    this.$http.get(uri_available_sparepart).then(response => {
+                        this.available_spareparts = response.data.message
+                    })
+                }
             },
             sendData() {
                 var selected_item = this.form.sparepart
 
                 this.available_spareparts.forEach(e => {
-                    if ( e.nama_sparepart == selected_item ) {
+                    if (e.nama_sparepart == selected_item) {
                         this.form.price = parseInt(e.harga_sparepart)
                     }
                 });
@@ -194,13 +193,13 @@
                 var selected_item = this.form.sparepart
 
                 this.available_spareparts.forEach(e => {
-                    if ( e.nama_sparepart == selected_item ) {
+                    if (e.nama_sparepart == selected_item) {
                         this.form.price = parseInt(e.harga_sparepart)
                     }
                 });
 
                 this.form.totalPrice = parseInt(this.form.amount) * this.form.price;
-                
+
                 this.sparepart.append('nama', this.form.sparepart);
                 this.sparepart.append('jumlah_beli', this.form.amount);
                 this.sparepart.append('harga', this.form.price);
@@ -232,7 +231,7 @@
                 this.form.price = item.harga;
                 this.form.amount = item.jumlah_beli;
                 this.form.totalPrice = item.total_harga,
-                (this.updatedId = item.id_transaksi);
+                    (this.updatedId = item.id_transaksi);
             },
             deleteData(deleteId) { //mengahapus data      
                 var uri = this.$apiUrl + '/transaksi/' + deleteId; //data dihapus berdasarkan id 

@@ -143,10 +143,14 @@
     },
     methods: {
       getData() {
-        var uri = this.$apiUrl + "/derek";
-        this.$http.get(uri).then(response => {
-          this.towings = response.data.message;
-        });
+        if (this.$session.exists() == false) {
+
+        } else {
+          var uri = this.$apiUrl + "/derek";
+          this.$http.get(uri).then(response => {
+            this.towings = response.data.message;
+          });
+        }
       },
       sendData() {
         this.towing.append("merk", this.form.merk);

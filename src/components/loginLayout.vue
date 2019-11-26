@@ -35,6 +35,7 @@
 
 
 <script>
+  import VueSession from 'vue-session'
   export default {
     data() {
       return {
@@ -50,6 +51,48 @@
       //   this.$store.dispatch('signUserUp', {email: this.email, password: this.password})
       // },
       login() {
+        this.users.append('username', this.user.username);
+        this.users.append('password', this.user.password);
+        
+        var uri = this.$apiUrl + '/user/login'
+        this.load = true;
+        this.$http.post(uri, this.users).then(response => {
+          if (response.data.error == true) {
+            console.log(response.data.error);
+            this.alert = true; //mengaktifkan snackbar
+            this.color = 'red';
+            this.type = 'error' //memberi warna snackbar
+            this.text = response.data.message; //memasukkan pesan ke snackbar
+            this.load = false;
+
+          } else {
+            console.log(response.data.error);
+            this.alert = true; //mengaktifkan snackbar
+            this.color = 'green'; //memberi warna snackbar
+            this.text = 'SUCCESS';
+            this.type = 'success' //memasukkan pesan ke snackbar
+            this.load = false;
+            this.$session.start();
+            this.$session.set('username', this.user.username);
+            this.$session.set('id_user', this.user.id_user);
+            console.log(this.user.username);
+            this.$router.push({
+              name: "HomeController"
+            });
+
+          }
+        }).catch(error => {
+          console.log(error);
+          this.errors = error
+          this.alert = true;
+          this.text = 'Something Went Wrong';
+          this.color = 'red';
+          this.load = false;
+          this.type = 'error'
+        })
+      },
+
+      /*login() {
         var url = this.$apiUrl + "/Auth";
 
         this.user = new FormData();
@@ -71,7 +114,7 @@
             this.load = false;
           }
         });
-      }
+      }*/
     }
   }
 </script>
