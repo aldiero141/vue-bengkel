@@ -2,7 +2,7 @@
     <v-container>
         <v-row>
             <v-col>
-                <v-card class="mx-auto justify-center" color="green darken-1" dark>
+                <v-card class="mx-auto justify-center" color="blue accent-3" dark>
                     <v-row>
                         <v-col>
                             <v-card-title class="justify-center">
@@ -23,7 +23,7 @@
                         <v-layout row wrap style="margin:10px">
                             <v-flex xs6>
                                 <v-btn depressed dark rounded style="text-transform: none !important;"
-                                    color="error accent-3" @click="dialog = true">
+                                    color="red darken-4" @click="dialog = true">
                                     <v-icon size="18" class="mr-2">mdi-wrench</v-icon>Buy New Sparepart
                                 </v-btn>
                             </v-flex>
@@ -275,10 +275,10 @@
             }
         },
         mounted() {
-      this.getData();
-      if (localStorage.id_user) {
-        this.id_user = localStorage.id_user;
-      }
-    },
+            this.getData();
+            if (localStorage.id_user) {
+                this.id_user = localStorage.id_user;
+            }
+        },
     }
 </script>

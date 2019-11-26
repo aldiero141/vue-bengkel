@@ -23,7 +23,7 @@
           <v-container grid-list-md mb-0>
             <v-layout row wrap style="margin:10px">
               <v-flex xs6>
-                <v-btn depressed dark rounded style="text-transform: none !important;" color="blue accent-3"
+                <v-btn depressed dark rounded style="text-transform: none !important;" color="red darken-4"
                   @click="dialog = true">
                   <v-icon size="18" class="mr-2">mdi-motorbike</v-icon>Get New Service
                 </v-btn>

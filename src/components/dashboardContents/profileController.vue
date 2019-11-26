@@ -126,13 +126,11 @@
       };
     },
     methods: {
-       getData() {
-
-        var uri = this.$apiUrl + "/user/" + this.id_user;
+      getData() {
+        var uri = this.$apiUrl + "/user/" + localStorage.id_user;
         this.$http.get(uri).then(response => {
-          this.services = response.data.message;
-        });
-
+          this.profiles = response.data.message;
+        })
       },
 
       sendData() {
@@ -140,7 +138,7 @@
         this.profile.append("username", this.form.username);
         this.profile.append("email", this.form.email);
         this.profile.append("tgl_lahir", this.form.dateofbirth);
-        var uri = this.$apiUrl + "/user";
+        var uri = this.$apiUrl + "/user/" + localStorage.id_user;
         this.load = true;
         this.$http
           .post(uri, this.profile)
@@ -166,7 +164,7 @@
         this.profile.append("username", this.form.username);
         this.profile.append("email", this.form.email);
         this.profile.append("tgl_lahir", this.form.dateofbirth);
-        var uri = this.$apiUrl + "/user/" + this.id_user;
+        var uri = this.$apiUrl + "/user/" + localStorage.id_user;
         this.load = true;
         this.$http
           .post(uri, this.profile)
@@ -220,6 +218,7 @@
       this.getData();
       if (localStorage.id_user) {
         this.id_user = localStorage.id_user;
+        console.log(this.id_user);
       }
     }
   };

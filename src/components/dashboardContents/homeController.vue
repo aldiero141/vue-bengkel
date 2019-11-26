@@ -2,7 +2,7 @@
     <v-container>
         <v-row>
             <v-col>
-                <v-card class="mx-auto" color="blue lighten-1" dark>
+                <v-card class="mx-auto" color="blue accent-3" dark>
                     <v-card-title class="headline">
                         <h2>Welcome !</h2>
                     </v-card-title>
@@ -75,8 +75,6 @@
     </v-container>
 </template>
 <script>
-    import VueSession from 'vue-session'
-
     export default {
         data() {
             return {
@@ -112,13 +110,6 @@
                 });
 
             },
-        },
-        getAccInfo() {
-            var uri = this.$apiUrl + '/login/' + this.$session.get('id_user')
-            this.$http.get(uri).then(response => {
-                this.user = response.data.message;
-                this.currentRole = this.user[0].role;
-            })
         },
         mounted() {
             this.getData();

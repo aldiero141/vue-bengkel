@@ -7,10 +7,10 @@
       <v-spacer />
 
       <v-menu :close-on-content-click="false" :nudge-width="100" offset-x transition="slide-x-reverse-transition"
-        bottom >
+        bottom>
         <template v-slot:activator="{ on }">
           <v-btn text dark v-on="on">
-            Account<v-icon>mdi-menu-down</v-icon>
+            User Account<v-icon>mdi-menu-down</v-icon>
           </v-btn>
           <v-avatar>
             <img src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png" alt="John">
@@ -65,7 +65,6 @@
 </template>
 
 <script>
-  
   export default {
     data() {
       return {
@@ -115,7 +114,7 @@
       },
 
       getData() {
-        var uri = this.$apiUrl + "/user/" + this.id_user;
+        var uri = this.$apiUrl + "/user/" + localStorage.id_user;
         this.$http.get(uri).then(response => {
           this.profiles = response.data.message;
         })
