@@ -112,6 +112,7 @@
         color: null,
         text: "",
         load: false,
+        id_user: '',
         form: {
           name: "",
           username: "",
@@ -126,17 +127,18 @@
     },
     methods: {
       getData() {
-        var uri = this.$apiUrl + "/user/" + profile.id_user;
+        var uri = this.$apiUrl + "/user/" + localStorage.id_user;
         this.$http.get(uri).then(response => {
           this.profiles = response.data.message;
-        });
+        })
       },
+
       sendData() {
         this.profile.append("name", this.form.name);
         this.profile.append("username", this.form.username);
         this.profile.append("email", this.form.email);
         this.profile.append("tgl_lahir", this.form.dateofbirth);
-        var uri = this.$apiUrl + "/user";
+        var uri = this.$apiUrl + "/user/" + localStorage.id_user;
         this.load = true;
         this.$http
           .post(uri, this.profile)
@@ -162,7 +164,7 @@
         this.profile.append("username", this.form.username);
         this.profile.append("email", this.form.email);
         this.profile.append("tgl_lahir", this.form.dateofbirth);
-        var uri = this.$apiUrl + "/user/" + this.updatedId;
+        var uri = this.$apiUrl + "/user/" + localStorage.id_user;
         this.load = true;
         this.$http
           .post(uri, this.profile)
@@ -195,24 +197,6 @@
         this.form.dateofbirth = profile.tgl_lahir;
         (this.updatedId = profile.id_user);
       },
-      deleteData(deleteId) {
-        var uri = this.$apiUrl + "/user/" + deleteId;
-        this.$http
-          .delete(uri)
-          .then(response => {
-            this.snackbar = true;
-            this.text = response.data.message;
-            this.color = "green";
-            this.deleteDialog = false;
-            this.getData();
-          })
-          .catch(error => {
-            this.errors = error;
-            this.snackbar = true;
-            this.text = "Try Again";
-            this.color = "red";
-          });
-      },
       setForm() {
         if (this.typeInput === "new") {
           this.sendData();
@@ -232,6 +216,10 @@
     },
     mounted() {
       this.getData();
+      if (localStorage.id_user) {
+        this.id_user = localStorage.id_user;
+        console.log(this.id_user);
+      }
     }
   };
 </script>

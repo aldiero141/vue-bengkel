@@ -35,6 +35,7 @@
 
 
 <script>
+  import VueSession from 'vue-session'
   export default {
     data() {
       return {
@@ -49,6 +50,49 @@
       // onSignup () {
       //   this.$store.dispatch('signUserUp', {username: this.username, password: this.password})
       // },
+/*      login() {
+        this.user = new FormData();
+        this.user.append('username', this.username);
+        this.user.append('password', this.password);
+
+        var uri = this.$apiUrl + '/user/login';
+        this.load = true;
+        this.$http.post(uri, this.user).then(response => {
+          if (response.data.error == true) {
+            console.log(response.data.error);
+            this.alert = true; //mengaktifkan snackbar
+            this.color = 'red';
+            this.type = 'error' //memberi warna snackbar
+            this.text = response.data.message; //memasukkan pesan ke snackbar
+            this.load = false;
+
+          } else {
+            console.log(response.data.error);
+            this.alert = true; //mengaktifkan snackbar
+            this.color = 'green'; //memberi warna snackbar
+            this.text = 'SUCCESS';
+            this.type = 'success' //memasukkan pesan ke snackbar
+            this.load = false;
+            this.$session.start();
+            this.$session.set('username', this.user.username);
+            this.$session.set('id_user', this.user.id_user);
+            console.log(this.user.username);
+            this.$router.push({
+              name: "HomeController"
+            });
+
+          }
+        }).catch(error => {
+          console.log(error);
+          this.errors = error
+          this.alert = true;
+          this.text = 'Something Went Wrong';
+          this.color = 'red';
+          this.load = false;
+          this.type = 'error'
+        })
+      },*/
+
       login() {
         var url = this.$apiUrl + "/Auth";
 
@@ -60,6 +104,8 @@
           // console.log("sudah bisa post")
           if (response.data.token) {
             localStorage.setItem("token", response.data.token);
+            localStorage.setItem("id_user", response.data.id_user);
+            console.log(localStorage.id_user)
             this.$router.push({
               name: "HomeController"
             });

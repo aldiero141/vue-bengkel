@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col>
-        <v-card class="mx-auto justify-center" color="deep-orange lighten-1" dark>
+        <v-card class="mx-auto justify-center" color="blue accent-3" dark>
           <v-row>
             <v-col>
               <v-card-title class="justify-center">
@@ -22,7 +22,7 @@
           <v-container grid-list-md mb-0>
             <v-layout row wrap style="margin:10px">
               <v-flex xs6>
-                <v-btn depressed dark rounded style="text-transform: none !important;" color="blue accent-3"
+                <v-btn depressed dark rounded style="text-transform: none !important;" color="red darken-4"
                   @click="dialog = true">
                   <v-icon size="18" class="mr-2">mdi-towing</v-icon>Tow Other Vehicle
                 </v-btn>
@@ -98,6 +98,7 @@
     data() {
       return {
         dialog: false,
+        id_user: '',
         keyword: "",
         headers: [{
             text: "No",
@@ -143,11 +144,13 @@
     },
     methods: {
       getData() {
+
         var uri = this.$apiUrl + "/derek";
         this.$http.get(uri).then(response => {
           this.towings = response.data.message;
         });
       },
+
       sendData() {
         this.towing.append("merk", this.form.merk);
         this.towing.append("warna", this.form.color);
@@ -249,6 +252,9 @@
     },
     mounted() {
       this.getData();
-    }
+      if (localStorage.id_user) {
+        this.id_user = localStorage.id_user;
+      }
+    },
   };
 </script>

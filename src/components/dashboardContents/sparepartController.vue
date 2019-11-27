@@ -2,7 +2,7 @@
     <v-container>
         <v-row>
             <v-col>
-                <v-card class="mx-auto justify-center" color="green darken-1" dark>
+                <v-card class="mx-auto justify-center" color="blue accent-3" dark>
                     <v-row>
                         <v-col>
                             <v-card-title class="justify-center">
@@ -23,7 +23,7 @@
                         <v-layout row wrap style="margin:10px">
                             <v-flex xs6>
                                 <v-btn depressed dark rounded style="text-transform: none !important;"
-                                    color="error accent-3" @click="dialog = true">
+                                    color="red darken-4" @click="dialog = true">
                                     <v-icon size="18" class="mr-2">mdi-wrench</v-icon>Buy New Sparepart
                                 </v-btn>
                             </v-flex>
@@ -68,13 +68,8 @@
                                 </v-text-field>
                             </v-col> -->
                             <v-col class="d-flex" cols="12" sm="12">
-                                <v-select
-                                :items="available_spareparts"
-                                label="Choose Sparepart"
-                                outlined
-                                v-model="form.sparepart" 
-                                item-text="nama_sparepart"
-                                ></v-select>
+                                <v-select :items="available_spareparts" label="Choose Sparepart" outlined
+                                    v-model="form.sparepart" item-text="nama_sparepart"></v-select>
                             </v-col>
                             <!-- <v-col cols="12">
                                 <v-text-field label="Price*" v-model="form.price" required></v-text-field>
@@ -105,6 +100,7 @@
         data() {
             return {
                 dialog: false,
+                id_user: '',
                 keyword: '',
                 headers: [{
                     text: 'No',
@@ -145,6 +141,7 @@
         },
         methods: {
             getData() {
+
                 var uri = this.$apiUrl + '/transaksi'
                 var uri_available_sparepart = this.$apiUrl + '/sparepart'
 
@@ -155,12 +152,22 @@
                 this.$http.get(uri_available_sparepart).then(response => {
                     this.available_spareparts = response.data.message
                 })
+
             },
+
+            getAccInfo() {
+                var uri = this.$apiUrl + '/login/' + this.$session.get('id_user')
+                this.$http.get(uri).then(response => {
+                    this.user = response.data.message;
+                    this.currentRole = this.user[0].role;
+                })
+            },
+
             sendData() {
                 var selected_item = this.form.sparepart
 
                 this.available_spareparts.forEach(e => {
-                    if ( e.nama_sparepart == selected_item ) {
+                    if (e.nama_sparepart == selected_item) {
                         this.form.price = parseInt(e.harga_sparepart)
                     }
                 });
@@ -194,13 +201,13 @@
                 var selected_item = this.form.sparepart
 
                 this.available_spareparts.forEach(e => {
-                    if ( e.nama_sparepart == selected_item ) {
+                    if (e.nama_sparepart == selected_item) {
                         this.form.price = parseInt(e.harga_sparepart)
                     }
                 });
 
                 this.form.totalPrice = parseInt(this.form.amount) * this.form.price;
-                
+
                 this.sparepart.append('nama', this.form.sparepart);
                 this.sparepart.append('jumlah_beli', this.form.amount);
                 this.sparepart.append('harga', this.form.price);
@@ -232,7 +239,7 @@
                 this.form.price = item.harga;
                 this.form.amount = item.jumlah_beli;
                 this.form.totalPrice = item.total_harga,
-                (this.updatedId = item.id_transaksi);
+                    (this.updatedId = item.id_transaksi);
             },
             deleteData(deleteId) { //mengahapus data      
                 var uri = this.$apiUrl + '/transaksi/' + deleteId; //data dihapus berdasarkan id 
@@ -269,6 +276,9 @@
         },
         mounted() {
             this.getData();
+            if (localStorage.id_user) {
+                this.id_user = localStorage.id_user;
+            }
         },
     }
 </script>

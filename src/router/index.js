@@ -20,7 +20,6 @@ function isAuthenticated() {
   }
 }
 
-
 const routes = [{
     path: '/dashboard',
     component: DashboardLayout,

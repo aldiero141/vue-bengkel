@@ -2,7 +2,7 @@
     <v-container>
         <v-row>
             <v-col>
-                <v-card class="mx-auto" color="blue lighten-1" dark raised="4dp">
+                <v-card class="mx-auto" color="blue accent-3" dark>
                     <v-card-title class="headline">
                         <h2>Welcome !</h2>
                     </v-card-title>
@@ -63,7 +63,9 @@
                     <div>
                         <div class="mapouter">
                             <div class="gmap_canvas">
-                                <iframe id="gmap_canavas" width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJ2bND4e9Zei4RZTdsKR3y3kg&key=AIzaSyDwqex9g59_k5Dpkets81KieRPpKSxboqg" allowfullscreen></iframe> 
+                                <iframe id="gmap_canavas" width="100%" height="100%" frameborder="0" style="border:0"
+                                    src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJ2bND4e9Zei4RZTdsKR3y3kg&key=AIzaSyDwqex9g59_k5Dpkets81KieRPpKSxboqg"
+                                    allowfullscreen></iframe>
                             </div>
                         </div>
                     </div>
@@ -74,7 +76,48 @@
 </template>
 <script>
     export default {
+        data() {
+            return {
+                username: '',
+                password: '',
+                snackbar: false,
+                color: null,
+                text: '',
+                id_user: '',
+                dialog: false,
+                keyword: "",
+                profiles: [],
+                load: false,
+                form: {
+                    name: "",
+                    username: "",
+                    email: "",
+                    dateofbirth: ""
+                },
+                profile: new FormData(),
+                typeInput: "new",
+                errors: "",
+                updatedId: ""
+            }
+        },
+        methods: {
+            getData() {
+                var uri = this.$apiUrl + '/user/' + this.id_user
+                this.$http.get(uri).then(response => {
+                    this.user = response.data.data
+                    this.currentUser = this.id_user
+                    console.log(this.currentUser)
+                });
 
+            },
+        },
+        mounted() {
+            this.getData();
+            //this.getAccInfo();
+            if (localStorage.username) {
+                this.username = localStorage.username;
+            }
+        },
     }
 </script>
 <style>
@@ -91,9 +134,9 @@
         height: 100%;
         width: 100%;
     }
-    .geolocation{
+
+    .geolocation {
         height: 500px;
         margin-bottom: 70px;
     }
-
 </style>

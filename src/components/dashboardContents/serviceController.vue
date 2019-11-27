@@ -23,7 +23,7 @@
           <v-container grid-list-md mb-0>
             <v-layout row wrap style="margin:10px">
               <v-flex xs6>
-                <v-btn depressed dark rounded style="text-transform: none !important;" color="blue accent-3"
+                <v-btn depressed dark rounded style="text-transform: none !important;" color="red darken-4"
                   @click="dialog = true">
                   <v-icon size="18" class="mr-2">mdi-motorbike</v-icon>Get New Service
                 </v-btn>
@@ -100,6 +100,7 @@
     data() {
       return {
         dialog: false,
+        id_user: '',
         keyword: "",
         headers: [{
             text: "No",
@@ -144,18 +145,22 @@
     },
     methods: {
       getData() {
+
         var uri = this.$apiUrl + "/Servis";
         this.$http.get(uri).then(response => {
           this.services = response.data.message;
         });
+
       },
+
+
       sendData() {
 
         this.service.append("tgl_servis", this.form.date);
         this.service.append("jenis_servis", this.form.serviceType);
         this.service.append("no_plat_servis", this.form.licenseNumber);
         this.service.append("pesan", this.form.message);
-        
+
         var uri = this.$apiUrl + "/Servis";
         this.load = true;
         this.$http
@@ -252,6 +257,9 @@
     },
     mounted() {
       this.getData();
-    }
+      if (localStorage.id_user) {
+        this.id_user = localStorage.id_user;
+      }
+    },
   };
 </script>

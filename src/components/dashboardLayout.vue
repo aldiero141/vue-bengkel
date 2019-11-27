@@ -6,11 +6,11 @@
       </v-toolbar-items>
       <v-spacer />
 
-      <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="100" offset-x
-        transition="slide-x-reverse-transition" bottom>
+      <v-menu :close-on-content-click="false" :nudge-width="100" offset-x transition="slide-x-reverse-transition"
+        bottom>
         <template v-slot:activator="{ on }">
-          <v-btn text dark v-on="on" >
-            {{profile.username}}Username<v-icon>mdi-menu-down</v-icon>
+          <v-btn text dark v-on="on">
+            User Account<v-icon>mdi-menu-down</v-icon>
           </v-btn>
           <v-avatar>
             <img src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png" alt="John">
@@ -32,13 +32,13 @@
           <v-list>
             <v-list-item>
               <v-list-item-content>
-                <v-btn depressed dark style="text-transform: none !important;"
-                  color="blue accent-3" @click="$router.push('/profile')" >Profile</v-btn>
-                
-              <v-btn depressed dark style="text-transform: none !important;"
-                  color="red accent-3" @click="logout()">Sign Out</v-btn>
+                <v-btn depressed dark style="text-transform: none !important;" color="blue accent-3"
+                  @click="$router.push('/profile')">Profile</v-btn>
+
+                <v-btn depressed dark style="text-transform: none !important;" color="red accent-3" @click="logout()">
+                  Sign Out</v-btn>
               </v-list-item-content>
-              
+
             </v-list-item>
           </v-list>
         </v-card>
@@ -71,6 +71,7 @@
         drawer: null,
         profiles: [],
         profile: new FormData(),
+        username: '',
         footer: {
           inset: false,
         },
@@ -103,12 +104,7 @@
       };
     },
     methods: {
-      getData() {
-        var uri = this.$apiUrl + "/user/" + profile.id_user;
-        this.$http.get(uri).then(response => {
-          this.profiles = response.data.message;
-        });
-      },
+
       logout() {
         localStorage.removeItem("token");
         this.$router.push({
@@ -116,15 +112,19 @@
         });
         alert("Success Logout!");
       },
+
       getData() {
-        var uri = this.$apiUrl + "/user/" + profile.id_user;
+        var uri = this.$apiUrl + "/user/" + localStorage.id_user;
         this.$http.get(uri).then(response => {
           this.profiles = response.data.message;
         })
       }
     },
-     mounted() {
+    mounted() {
       this.getData();
-    }
+      if (localStorage.id_user) {
+        this.id_user = localStorage.id_user;
+      }
+    },
   };
 </script>
