@@ -16,11 +16,13 @@
                 <v-card>
                     <v-card-title class="headline">Service</v-card-title>
                     <v-card-subtitle>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        Atma Bengkel provides you an ease of service. When other place require you to visit them
+                        when you're in your busy hours, we can take your bike on your place and bring it to Atma
+                        Bengkel. Simply click the "SERVICE" button on the navigation bar and add new service. 
+                        Fill the form and you're done!<br/>
+                        You can also edit or cancel your service plan by clicking the action button. You can pick 
+                        up your vehicle after the service is done. Check out our location on the bottom of this 
+                        website!
                     </v-card-subtitle>
                 </v-card>
             </v-col>
@@ -31,11 +33,12 @@
                 <v-card>
                     <v-card-title class="headline">Sparepart</v-card-title>
                     <v-card-subtitle>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        Need a new sparepart? We have the finest spareparts waiting to be bought by you! 
+                        You can visit our store (location on map below) or order it via this website!<br/>
+                        Push that "SPAREPART" button on navigation bar and Choose "Buy new sparepart". Fill
+                        the form and save it. The payment will be done when you take your goods. If you ever
+                        change your mind, you can edit or cancel your purchase by clicking on the action button.<br/>
+                        So, what do you wanna buy?
                     </v-card-subtitle>
                 </v-card>
             </v-col>
@@ -46,11 +49,13 @@
                 <v-card>
                     <v-card-title class="headline">Towing</v-card-title>
                     <v-card-subtitle>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        Ever been in a sh*tty situation where you got stuck in the middle of the road and your
+                        motorcycle suddenly not working?<br/>
+                        Worry not! 'Cause you can count on us everytime that happens.<br/>
+                        On the navigation bar, click "TOWING" and let us know where you are and what your vehicle 
+                        looks like. We will immediately pick your vehicle up to our place. You can also edit and 
+                        cancel it.<br/>
+                        Let us know when you're in need!
                     </v-card-subtitle>
                 </v-card>
             </v-col>
