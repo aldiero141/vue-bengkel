@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col>
-        <v-card class="mx-auto justify-center" color="blue accent-3" dark>
+        <v-card class="mx-auto justify-center" color="green darken-1" dark>
           <v-row>
             <v-col>
               <v-card-title class="justify-center">
@@ -23,7 +23,7 @@
           <v-container grid-list-md mb-0>
             <v-layout row wrap style="margin:10px">
               <v-flex xs6>
-                <v-btn depressed dark rounded style="text-transform: none !important;" color="red darken-4"
+                <v-btn depressed dark rounded style="text-transform: none !important;" color="blue darken-2"
                   @click="dialog = true">
                   <v-icon size="18" class="mr-2">mdi-motorbike</v-icon>Get New Service
                 </v-btn>
@@ -73,7 +73,7 @@
                 <v-text-field label="Address*" v-model="form.serviceType" required></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Phone Number*" v-model="form.licenseNumber" required></v-text-field>
+                <v-text-field label="License Number*" v-model="form.licenseNumber" required></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field label="Message*" v-model="form.message" required></v-text-field>

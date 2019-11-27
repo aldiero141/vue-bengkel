@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar dense app fixed clipped-left height="70px" color="red darken-3">
+    <v-app-bar dense app fixed clipped-left height="70px" color="red darken-2">
       <v-toolbar-items v-for="item in items" :key="item.title" link @click="$router.push(item.to)">
         <v-btn text color="white">{{ item.title }}</v-btn>
       </v-toolbar-items>
@@ -23,7 +23,7 @@
                 <img src="https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png" alt="John">
               </v-list-item-avatar>
               <v-list-item-content v-for="profile in profiles" :key="profile.id_user">
-                <v-list-item-title>{{profile.username}}</v-list-item-title>
+                <v-list-item-title><b>{{profile.username}}</b></v-list-item-title>
                 <v-list-item-subtitle>{{profile.email}}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
@@ -32,10 +32,10 @@
           <v-list>
             <v-list-item>
               <v-list-item-content>
-                <v-btn depressed dark style="text-transform: none !important;" color="blue accent-3"
+                <v-btn depressed dark style="text-transform: none !important;" color="blue darken-2"
                   @click="$router.push('/profile')">Profile</v-btn>
 
-                <v-btn depressed dark style="text-transform: none !important;" color="red accent-3" @click="logout()">
+                <v-btn depressed dark style="text-transform: none !important;" color="red darken-4" @click="logout()">
                   Sign Out</v-btn>
               </v-list-item-content>
 

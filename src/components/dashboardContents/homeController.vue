@@ -2,11 +2,14 @@
     <v-container>
         <v-row>
             <v-col>
-                <v-card class="mx-auto" color="blue accent-3" dark>
-                    <v-card-title class="headline">
-                        <h2>Welcome !</h2>
-                    </v-card-title>
-
+                <v-card class="mx-auto" color="red lighten-3" dark>
+                    <v-row>
+                        <v-col class="mx-4">
+                            <v-card-title class="headline">
+                                <h2>Welcome !</h2>
+                            </v-card-title>
+                        </v-col>
+                    </v-row>
                 </v-card>
             </v-col>
         </v-row>

@@ -31,7 +31,7 @@
               <v-col v-for="profile in profiles" :key="profile.id_user">
                 <v-spacer></v-spacer>
                 <v-btn class="ma-2" depressed dark rounded style="text-transform: none !important;"
-                  color="blue accent-3" @click="editHandler(profile)">
+                  color="blue darken-2" @click="editHandler(profile)">
                   <v-icon size="18" class="mr-2">mdi-account-edit</v-icon>Edit Profile
                 </v-btn>
               </v-col>
@@ -85,7 +85,7 @@
                 <v-text-field label="Email" v-model="form.email" required></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Date of Birth" v-model="form.dateofbirth" required></v-text-field>
+                <v-text-field label="Date of Birth" v-model="form.dateofbirth" required type="date"></v-text-field>
               </v-col>
             </v-row>
           </v-container>
