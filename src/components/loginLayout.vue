@@ -47,7 +47,7 @@
     },
     methods: {
       // onSignup () {
-      //   this.$store.dispatch('signUserUp', {email: this.email, password: this.password})
+      //   this.$store.dispatch('signUserUp', {username: this.username, password: this.password})
       // },
       login() {
         var url = this.$apiUrl + "/Auth";
