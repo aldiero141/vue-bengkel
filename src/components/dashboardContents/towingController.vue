@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col>
-        <v-card class="mx-auto justify-center" color="blue accent-3" dark>
+        <v-card class="mx-auto justify-center" color="blue lighten-2" dark>
           <v-row>
             <v-col>
               <v-card-title class="justify-center">
@@ -22,7 +22,7 @@
           <v-container grid-list-md mb-0>
             <v-layout row wrap style="margin:10px">
               <v-flex xs6>
-                <v-btn depressed dark rounded style="text-transform: none !important;" color="red darken-4"
+                <v-btn depressed dark rounded style="text-transform: none !important;" color="blue darken-2"
                   @click="dialog = true">
                   <v-icon size="18" class="mr-2">mdi-towing</v-icon>Tow Other Vehicle
                 </v-btn>
