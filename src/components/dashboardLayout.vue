@@ -55,7 +55,7 @@
       <v-card class="flex" flat tile>
         <v-card-text class="py-2 text-left">
           ©{{ new Date().getFullYear() }} — Created with <v-icon>mdi-heart</v-icon> by Kelompok 6 PAW™ — Raditya Dimas
-          Bagus Santoso — Alexander Rivelino Aldo Aldiero — Yanuarius Hermawan — Alisha Aileen
+          Bagus Santoso 9234 — Alexander Rivelino Aldo Aldiero 9395 — Yanuarius Hermawan 9454 — Alisha Aileen 9457
         </v-card-text>
       </v-card>
     </v-footer>
