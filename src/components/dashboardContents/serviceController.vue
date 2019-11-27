@@ -41,7 +41,7 @@
                     <td>{{ item.jenis_servis }}</td>
                     <td>{{ item.no_plat_servis }}</td>
                     <td>{{ item.pesan }}</td>
-                    <td class="text-center">
+                    <td class="text-left">
                       <v-btn icon color="indigo" light @click="editHandler(item)">
                         <v-icon>mdi-pencil</v-icon>
                       </v-btn>

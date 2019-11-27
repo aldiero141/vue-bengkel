@@ -42,7 +42,7 @@
                                         <td>{{ item.harga }}</td>
                                         <td>{{ item.jumlah_beli }}</td>
                                         <td>{{ item.total_harga }}</td>
-                                        <td class="text-center">
+                                        <td class="text-left">
                                             <v-btn icon color="indigo" light @click="editHandler(item)">
                                                 <v-icon>mdi-pencil</v-icon>
                                             </v-btn>

@@ -32,13 +32,11 @@
           <v-list>
             <v-list-item>
               <v-list-item-content>
-                <v-btn depressed dark style="text-transform: none !important;" color="blue darken-2"
+                <v-btn class="my-1" depressed dark style="text-transform: none !important;" color="blue darken-2"
                   @click="$router.push('/profile')">Profile</v-btn>
-
-                <v-btn depressed dark style="text-transform: none !important;" color="red darken-4" @click="logout()">
+                <v-btn class="my-1" depressed dark style="text-transform: none !important;" color="red darken-4" @click="logout()">
                   Sign Out</v-btn>
               </v-list-item-content>
-
             </v-list-item>
           </v-list>
         </v-card>

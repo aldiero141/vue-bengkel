@@ -17,8 +17,8 @@
         <v-row>
             <v-col>
                 <v-card>
-                    <v-card-title class="headline">Service</v-card-title>
-                    <v-card-subtitle>
+                    <v-card-title class="mx-4"><b>Service</b></v-card-title>
+                    <v-card-subtitle class="mx-4">
                         Atma Bengkel provides you an ease of service. When other place require you to visit them
                         when you're in your busy hours, we can take your bike on your place and bring it to Atma
                         Bengkel. Simply click the "SERVICE" button on the navigation bar and add new service. 
@@ -34,8 +34,8 @@
         <v-row>
             <v-col>
                 <v-card>
-                    <v-card-title class="headline">Sparepart</v-card-title>
-                    <v-card-subtitle>
+                    <v-card-title class=" mx-4"><b>Sparepart</b></v-card-title>
+                    <v-card-subtitle class="mx-4">
                         Need a new sparepart? We have the finest spareparts waiting to be bought by you! 
                         You can visit our store (location on map below) or order it via this website!<br/>
                         Push that "SPAREPART" button on navigation bar and Choose "Buy new sparepart". Fill
@@ -50,8 +50,8 @@
         <v-row>
             <v-col>
                 <v-card>
-                    <v-card-title class="headline">Towing</v-card-title>
-                    <v-card-subtitle>
+                    <v-card-title class="mx-4"><b>Towing</b></v-card-title>
+                    <v-card-subtitle class="mx-4">
                         Ever been in a sh*tty situation where you got stuck in the middle of the road and your
                         motorcycle suddenly not working?<br/>
                         Worry not! 'Cause you can count on us everytime that happens.<br/>
@@ -67,7 +67,7 @@
         <v-row>
             <v-col>
                 <v-card class="geolocation">
-                    <v-card-title class="headline">Find Us</v-card-title>
+                    <v-card-title class="mx-4"><b>Find Us Here!</b></v-card-title>
                     <div>
                         <div class="mapouter">
                             <div class="gmap_canvas">
